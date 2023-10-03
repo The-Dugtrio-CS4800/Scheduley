@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.11.0",
     "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
+    "mongodb": "^6.1.0",
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0",
