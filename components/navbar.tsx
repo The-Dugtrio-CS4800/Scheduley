@@ -5,6 +5,7 @@ import {
     Flex,
     Avatar,
     HStack,
+    Text,
     IconButton,
     Button,
     Menu,
@@ -18,9 +19,13 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 
+interface Props {
+    children: React.ReactNode
+}
+
 const Links = ['Dashboard', 'Projects', 'Team']
 
-const NavLink = (props) => {
+const NavLink = (props: Props) => {
     const { children } = props
     return (
         <Box
@@ -38,7 +43,7 @@ const NavLink = (props) => {
     )
 }
 
-export default function Navbar() {
+export default function WithAction() {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
