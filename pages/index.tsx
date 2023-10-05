@@ -1,11 +1,9 @@
 import Head from 'next/head';
 import * as React from 'react'
-import {ChakraProvider} from '@chakra-ui/react'
 import Navbar from "../components/navbar";
 
 export default function Home(): JSX.Element {
     return (
-        <ChakraProvider>
             <div >
                 <Head>
                     <title>Scheduley</title>
@@ -13,11 +11,6 @@ export default function Home(): JSX.Element {
                 </Head>
 
                 <Navbar/>
-
-
-
-
             </div>
-        </ChakraProvider>
     );
 }
