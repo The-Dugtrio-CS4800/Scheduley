@@ -16,7 +16,9 @@ import {
     useDisclosure,
     useColorModeValue,
     Stack,
+    Link,
 } from '@chakra-ui/react'
+import NextLink from 'next/link'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 
 interface Props {
@@ -66,14 +68,16 @@ export default function WithAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
+                    <Link as={NextLink} href='/new'>
                         <Button
                             variant={'solid'}
                             colorScheme={'teal'}
                             size={'sm'}
                             mr={4}
                             leftIcon={<AddIcon />}>
-                            Action
+                            New Meeting
                         </Button>
+                        </Link>
                         <Menu>
                             <MenuButton
                                 as={Button}

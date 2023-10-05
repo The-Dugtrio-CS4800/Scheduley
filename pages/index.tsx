@@ -3,7 +3,7 @@ import * as React from 'react'
 import {ChakraProvider} from '@chakra-ui/react'
 import Navbar from "../components/navbar";
 
-export default function Home() {
+export default function Home(): JSX.Element {
     return (
         <ChakraProvider>
             <div >
