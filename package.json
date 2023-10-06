@@ -3,7 +3,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "cypress:open": "cypress:open"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
@@ -28,6 +29,8 @@
     "node": ">=18"
   },
   "devDependencies": {
+    "@types/react": "18.2.25",
+    "cypress": "^13.3.0",
     "ts-loader": "^9.4.4",
     "typescript": "^5.2.2"
   }
