@@ -1,6 +1,11 @@
 import React from 'react';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+interface Food {
+    id: number;
+    title: string;
+}
+
 // Create a query client instance
 const queryClient = new QueryClient();
 
@@ -8,29 +13,31 @@ const queryClient = new QueryClient();
 const fetchData = async () => {
   // Simulated asynchronous operation (e.g., fetching data from an API)
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const data = [
+  const data: Food[] = [
     { id: 1, title: 'tteokbokki' },
     { id: 2, title: 'laksa' },
     // Add more items as needed
   ];
 
   // Store the data in the query client
-  queryClient.setQueryData('food', data);
+  queryClient.setQueryData(['food'], data);
 };
 
 const Todos: React.FC = () => {
   // useQuery hook to fetch and manage data
-  useQuery('food', fetchData, {
+  useQuery(['food'], fetchData, {
     // Automatically refetch the data every 5 seconds
     refetchInterval: 5000,
   });
+
+  const food = queryClient.getQueryData(['food']) as Food[];
 
   return (
     <div>
       <h1>Food</h1>
       <ul>
-        {queryClient.getQueryData('food')?.map((todo: any) => (
-          <li key={todo.id}>{todo.title}</li>
+        {food?.map((food) => (
+          <li key={food.id}>{food.title}</li>
         ))}
       </ul>
     </div>
