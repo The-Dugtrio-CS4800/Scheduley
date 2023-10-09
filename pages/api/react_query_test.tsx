@@ -16,14 +16,13 @@ const fetchData = async () => {
   const data: Food[] = [
     { id: 1, title: 'tteokbokki' },
     { id: 2, title: 'laksa' },
-    // Add more items as needed
   ];
 
   // Store the data in the query client
   queryClient.setQueryData(['food'], data);
 };
 
-const Todos: React.FC = () => {
+const Food: React.FC = () => {
   // useQuery hook to fetch and manage data
   useQuery(['food'], fetchData, {
     // Automatically refetch the data every 5 seconds
@@ -31,7 +30,8 @@ const Todos: React.FC = () => {
   });
 
   const food = queryClient.getQueryData(['food']) as Food[];
-
+  console.log('Food Data:', food);
+  
   return (
     <div>
       <h1>Food</h1>
@@ -48,7 +48,7 @@ const App: React.FC = () => {
   return (
     // Wrap the component tree with QueryClientProvider to provide the query client context
     <QueryClientProvider client={queryClient}>
-      <Todos />
+      <Food />
     </QueryClientProvider>
   );
 };
@@ -60,10 +60,9 @@ export default async function handler(req, res) {
     try {
       // Simulated asynchronous operation (e.g., fetching data from a database)
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      const data = [
+      const data: Food[] = [
         { id: 1, title: 'tteokbokki' },
         { id: 2, title: 'laksa' },
-        // Add more items as needed
       ];
   
       // Send a JSON response with the fetched data
