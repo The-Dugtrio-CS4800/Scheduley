@@ -1,4 +1,6 @@
-// To run: npx cypress open
+// To run: 
+// First time: npx cypress open
+//    Afterwards: npm run cypress
 // Launch "npm run dev" in a different terminal
 
 describe('React Query Tests', () => {
