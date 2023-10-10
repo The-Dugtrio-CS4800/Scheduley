@@ -5,12 +5,11 @@ import NextLink from "next/link";
 import Navbar from "../components/navbar";
 
 export default function New() {
+    const oneWeek = new DateObject()
+    oneWeek.day += 6
     const [values, setValues] = useState([
-        [new DateObject().set({day: 1}), new DateObject().set({day: 3})],
-        [new DateObject().set({day: 6}), new DateObject().set({day: 12})],
-        [new DateObject().set({day: 23}), new DateObject().set({day: 27})],
+        [new DateObject(), oneWeek],
     ])
-
 
     return (<>
 
@@ -18,7 +17,9 @@ export default function New() {
         <VStack>
             <Heading>Create a New Meeting</Heading>
             <Calendar
+                // @ts-ignore
                 value={values}
+                // @ts-ignore
                 onChange={setValues}
                 multiple
                 range
