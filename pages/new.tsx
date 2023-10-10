@@ -5,7 +5,6 @@ import NextLink from "next/link";
 import Navbar from "../components/navbar";
 
 export default function New() {
-    const [selectedDates, setSelectedDates] = useState<Date[]>([new Date(), new Date()]);
     const [values, setValues] = useState([
         [new DateObject().set({day: 1}), new DateObject().set({day: 3})],
         [new DateObject().set({day: 6}), new DateObject().set({day: 12})],
@@ -25,7 +24,7 @@ export default function New() {
                 range
             />
             <Link as={NextLink} href='/meeting/id'>
-                <Button colorScheme='teal' variant='solid'
+                <Button colorScheme='teal' variant='solid' data-cy='submit'
                         onClick={() => {
                             values.map((dateList) => {
                                 dateList.map((date) => {
