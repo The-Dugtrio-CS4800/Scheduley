@@ -17,6 +17,7 @@
     "@types/react-query": "^1.2.9",
     "axios": "^1.5.1",
     "chakra-dayzed-datepicker": "^0.2.10",
+    "core-js": "^3.33.0",
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.10",
     "dayzed": "^3.2.3",
@@ -27,6 +28,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.2",
     "react-multi-date-picker": "^4.3.3",
+    "react-schedule-selector": "^3.0.2",
+    "styled-components": "^6.1.0",
     "zod": "^3.22.2"
   },
   "engines": {
