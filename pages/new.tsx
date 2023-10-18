@@ -1,13 +1,12 @@
-import {Button, Heading, Link, VStack} from "@chakra-ui/react";
+import {Button, Heading, VStack} from "@chakra-ui/react";
 import React, {useState} from "react";
 import {Calendar, DateObject} from "react-multi-date-picker"
-import NextLink from "next/link";
+import Link from 'next/link'
 import Navbar from "../components/navbar";
-import {router} from "next/client";
 
 function generateID(){
     const id = 234
-    router.push(`/meeting/${encodeURIComponent(id)}`)
+    return id;
 }
 
 export default function New() {
@@ -30,6 +29,7 @@ export default function New() {
                 multiple
                 range
             />
+                <Link href={`/meeting/${encodeURIComponent(generateID())}`}>
                 <Button colorScheme='teal' variant='solid' data-cy='submit'
                         onClick={() => {
                             dates.map((dateList) => {
@@ -41,6 +41,7 @@ export default function New() {
                         }}>
                     Submit
                 </Button>
+                </Link>
         </VStack>
     </>)
 }
