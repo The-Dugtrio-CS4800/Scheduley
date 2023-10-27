@@ -95,8 +95,8 @@ jobs:
       - name: Install SSH client
         run: sudo apt-get install -y openssh-client
 
-      - name: Set up SSH key
-        run: echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      # - name: Set up SSH key
+      #  run: echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 
       - name: Deploy to EC2
         run: |
