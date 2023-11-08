@@ -103,7 +103,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ssh_key.pem
           chmod 600 ssh_key.pem
           ssh -o StrictHostKeyChecking=no -i ssh_key.pem ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com 'bash -s'
-          rm ssh_key.pem
 
         # ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com 'bash -s'
         #  echo "$SSH_PRIVATE_KEY" | ssh -o StrictHostKeyChecking=no -i /dev/stdin ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com 'bash -s'
@@ -117,3 +116,7 @@ jobs:
       - name: Deploy and run the application on EC2 instance
         run: |
           ssh -i ssh_key.pem -o StrictHostKeyChecking=no ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com 'cd ~/ && npm install && npm start'
+
+      - name: Cleanup
+        run: |
+          rm ssh_key.pem
