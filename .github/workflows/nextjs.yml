@@ -117,7 +117,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Send build file to EC2 instance
-        run: scp -i ssh_key.pem -o StrictHostKeyChecking=no -r ./out ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com:~/
+        run: scp -i ssh_key.pem -o StrictHostKeyChecking=no -r ./out/* ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com:~/
 
       - name: Deploy and run the application on EC2 instance
         run: |
