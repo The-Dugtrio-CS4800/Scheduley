@@ -83,9 +83,9 @@ jobs:
           path: ./out
       - name: Debugging Step
         run: |
-          ls -al ./out
           pwd
         # ls -al
+        # ls -al ./out
         shell: bash
 
   # Deployment job
