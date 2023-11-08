@@ -81,6 +81,12 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./out
+      - name: Debugging Step
+        run: |
+          ls -al
+          ls -al ./out
+          pwd
+        shell: bash
 
   # Deployment job
   deploy:
