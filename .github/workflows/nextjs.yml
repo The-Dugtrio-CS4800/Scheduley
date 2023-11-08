@@ -83,9 +83,9 @@ jobs:
           path: ./out
       - name: Debugging Step
         run: |
-          pwd
-        # ls -al
+          ls -al /home/runner/work/Scheduley/Scheduley/out
         # ls -al ./out
+        # pwd
         shell: bash
 
   # Deployment job
