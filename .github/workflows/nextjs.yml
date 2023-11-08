@@ -98,10 +98,7 @@ jobs:
       # - name: Set up SSH key
       #  run: echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
      
-      - name: Deploy to EC2
-        run: |
-
-      - name: Deploy to EC2
+      - name: SSH into EC2
         run: |
           echo "$SSH_PRIVATE_KEY" > ssh_key.pem
           chmod 600 ssh_key.pem
@@ -113,3 +110,10 @@ jobs:
         # ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ec2-user@ec2-18-216-6-88.us-east-2.compute.amazonaws.com 'bash -s'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Send build file to EC2 instance
+        run: scp -i ssh_key.pem -o StrictHostKeyChecking=no -r ./out ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com:~/
+
+      - name: Deploy and run the application on EC2 instance
+        run: |
+          ssh -i ssh_key.pem -o StrictHostKeyChecking=no ec2-user@ec2-3-138-107-206.us-east-2.compute.amazonaws.com 'cd ~/ && npm install && npm start'
