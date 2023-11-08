@@ -83,7 +83,7 @@ jobs:
           path: ./out
       - name: Debugging Step
         run: |
-          ls -al /home/runner/work/Scheduley/Scheduley/out
+          ls -al nohup.out
         # ls -al ./out
         # pwd
         shell: bash
