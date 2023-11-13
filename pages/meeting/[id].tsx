@@ -8,6 +8,20 @@ import {Box, Button, VStack} from "@chakra-ui/react";
 export default function Meeting() {
     const router = useRouter()
     const [schedule, setSchedule] = useState([])
+    const test: string = "test"
+
+    async function onSubmit() {
+        await fetch("/api/send", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                schedule
+            }),
+        });
+        //console.log(JSON.stringify(schedule))
+    }
 
     return <>{
         <div>
@@ -29,6 +43,7 @@ export default function Meeting() {
                         (schedule.map((date) => {
                             console.log(date)
                         }))
+                        onSubmit();
                     }}
                 >
                     Submit
