@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "core-js": "^3.33.0",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
     "mongodb": "^6.1.0",
     "next": "latest",
@@ -19,7 +20,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.2",
     "react-multi-date-picker": "^4.3.3",
-    "react-schedule-selector": "^3.0.2",
+    "react-schedule-selector": "^2.0.0",
     "styled-components": "^6.1.0",
     "ts-node": "^10.9.1"
   },
