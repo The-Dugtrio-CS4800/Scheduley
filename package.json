@@ -3,7 +3,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "start": "ts-node-dev --respawn --pretty --transpile-only ./index.ts",
+    "start": "ts-node-dev --respawn --pretty --transpile-only ./src/index.ts",
     "cypress:open": "cypress:open"
   },
   "dependencies": {
