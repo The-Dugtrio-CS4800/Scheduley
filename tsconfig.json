@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "preserve",
-    "module": "esnext",
+    "module": "commonjs", //used to be esnext
     "target": "es5",
     "strict": false,
     "esModuleInterop": true,
