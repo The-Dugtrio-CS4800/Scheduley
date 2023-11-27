@@ -22,6 +22,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.2",
+    "react-icons": "^4.12.0",
     "react-multi-date-picker": "^4.3.3",
     "react-schedule-selector": "^2.0.0",
     "styled-components": "^6.1.0",
