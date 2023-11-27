@@ -5,6 +5,7 @@ import {
     Flex,
     Avatar,
     HStack,
+    Image,
     Text,
     IconButton,
     Button,
@@ -25,7 +26,7 @@ interface Props {
     children: React.ReactNode
 }
 
-const Links = ['Dashboard', 'Projects', 'Team']
+const Links = ['Sign Up', 'About Us']
 
 const NavLink = (props: Props) => {
     const { children } = props
@@ -60,11 +61,19 @@ export default function WithAction() {
                         onClick={isOpen ? onClose : onOpen}
                     />
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
+                        <Box>
+                        <NextLink href="/">
+                                {/* Assuming 'logo.png' is the path to your logo image */}
+                                <Image src="/ScheduleyLogo.png" alt="Logo" boxSize="150px" objectFit="contain" />
+                        </NextLink>
+                        </Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-                            {Links.map((link) => (
+                            {/* {Links.map((link) => (
                                 <NavLink key={link}>{link}</NavLink>
-                            ))}
+                            ))} */}
+                            <Link as= {NextLink} href='/signIn'>
+                                {/* <NavLink>Sign In</NavLink> */} Sign In
+                            </Link>
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
@@ -79,7 +88,7 @@ export default function WithAction() {
                         </Button>
                         </Link>
                         <Menu>
-                            <MenuButton
+                            {/* <MenuButton
                                 as={Button}
                                 rounded={'full'}
                                 variant={'link'}
@@ -88,15 +97,19 @@ export default function WithAction() {
                                 <Avatar
                                     size={'sm'}
                                     src={
-                                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                        'https://i.pinimg.com/564x/9f/c8/76/9fc87619ef1efc19009f7ccc420634d1.jpg'
                                     }
                                 />
-                            </MenuButton>
+                            </MenuButton> */}
                             <MenuList>
-                                <MenuItem>Link 1</MenuItem>
-                                <MenuItem>Link 2</MenuItem>
+                                <MenuItem>
+                                    <Link as={NextLink} href='/'>
+                                        Log Out                                    
+                                    </Link>
+                                </MenuItem>
+                                {/* <MenuItem>Link 2</MenuItem>
                                 <MenuDivider />
-                                <MenuItem>Link 3</MenuItem>
+                                <MenuItem>Link 3</MenuItem> */}
                             </MenuList>
                         </Menu>
                     </Flex>
