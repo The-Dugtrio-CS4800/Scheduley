@@ -38,7 +38,7 @@ const NavLink = (props: Props) => {
             rounded={'md'}
             _hover={{
                 textDecoration: 'none',
-                bg: useColorModeValue('gray.200', 'gray.700'),
+                bg: '#7a2a30',
             }}
             href={'#'}>
             {children}
@@ -51,7 +51,7 @@ export default function WithAction() {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+            <Box bg= {useColorModeValue('#ffd9ce', '#ffd9ce')} px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <IconButton
                         size={'md'}
@@ -78,9 +78,9 @@ export default function WithAction() {
                     </HStack>
                     <Flex alignItems={'center'}>
                     <Link as={NextLink} href='/new'>
-                        <Button
+                        <Button color='white'
                             variant={'solid'}
-                            colorScheme={'teal'}
+                            bg={'#c14953'}
                             size={'sm'}
                             mr={4}
                             leftIcon={<AddIcon />}>
