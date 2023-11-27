@@ -19,8 +19,9 @@ export default function New() {
     return (<>
 
         <Navbar/>
-        <VStack>
-            <Heading>Create a New Meeting</Heading>
+        <VStack spacing='5'>
+            
+            <Heading py={{ base: '6', md: '12' }}>Create a New Meeting</Heading>
             <Calendar
                 // @ts-ignore
                 value={dates}
@@ -30,7 +31,7 @@ export default function New() {
                 range
             />
                 <Link href={`/meeting/${encodeURIComponent(generateID())}`}>
-                <Button colorScheme='teal' variant='solid' data-cy='submit'
+                <Button variant='solid' color='white' data-cy='submit' bg={'#c14953'}
                         onClick={() => {
                             dates.map((dateList) => {
                                 dateList.map((date) => {

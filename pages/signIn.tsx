@@ -34,7 +34,6 @@ export default function SignIn() {
       <Stack spacing="8">
         <Stack spacing="6">
           <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-          {/* <Image src="/ScheduleyLogo.png" alt="Logo" height="200" width="auto" objectFit="contain" /> */}
             <Heading size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
             <Text color="fg.muted">
               Don't have an account? <Link href="#">Sign up</Link>

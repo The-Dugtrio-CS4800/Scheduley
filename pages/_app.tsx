@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
         <ChakraProvider>
             <Component {...pageProps} />
             {/* <Box w="100%" h="1000px" bgGradient="radial(red.300, yellow.400, pink.200)" /> */}
-            <Box w="100%" h="1000px" bgColor="#ffd9ce" />
+            {/* <Box w="100%" h="1000px" bgColor="#F9F5F0" /> */}
         </ChakraProvider>
         // </Providers>
     )
