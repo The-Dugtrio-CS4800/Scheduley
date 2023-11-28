@@ -6,6 +6,7 @@ export default function Home(): JSX.Element {
     return (
         <>
             <Head>
+                <base href="/" />
                 <title>Scheduley</title>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
