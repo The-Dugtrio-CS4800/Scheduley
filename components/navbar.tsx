@@ -21,6 +21,8 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
     children: React.ReactNode
@@ -30,6 +32,10 @@ const Links = ['Sign Up', 'About Us']
 
 const NavLink = (props: Props) => {
     const { children } = props
+    const location = useLocation();
+    // Check if the current location is not the home screen
+    const isNotHome = location.pathname !== '/';
+
     return (
         <Box
             as="a"
@@ -42,13 +48,44 @@ const NavLink = (props: Props) => {
             }}
             href={'#'}>
             {children}
+            <Flex alignItems={'center'}>
+            {isNotHome && (
+                <div>
+                {/* Your buttons here */}
+                <Link as={NextLink} href='/new'>
+                    <Button color='white'
+                        variant={'solid'}
+                        bg={'#c14953'}
+                        size={'sm'}
+                        mr={4}
+                        leftIcon={<AddIcon />}>
+                        New Meeting
+                    </Button>
+                </Link>
+                <Link as={NextLink} href='/new'>
+                <Button color='white'
+                    variant={'solid'}
+                    bg={'#c14953'}
+                    size={'sm'}
+                    mr={4}
+                    leftIcon={<AddIcon />}>
+                    New Meeting
+                </Button>
+                </Link>
+                {/* ... other buttons */}
+                </div>
+            )}
+            </Flex>
         </Box>
+        
     )
 }
 
 export default function WithAction() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
+    
+    
+    
     return (
         <>
             <Box bg= {useColorModeValue('#ffd9ce', '#ffd9ce')} px={4}>
@@ -118,3 +155,27 @@ export default function WithAction() {
         </>
     )
 }
+
+
+// function Navbar() {
+//   const location = useLocation();
+
+//   // Check if the current location is not the home screen
+//   const isNotHome = location.pathname !== '/';
+
+//   return (
+//     <nav>
+//       {/* Your navbar content here */}
+      
+//       {/* Conditionally render buttons if not on the home screen */}
+//       {isNotHome && (
+//         <div>
+//           {/* Your buttons here */}
+//           <button>Button 1</button>
+//           <button>Button 2</button>
+//           {/* ... other buttons */}
+//         </div>
+//       )}
+//     </nav>
+//   );
+// }
