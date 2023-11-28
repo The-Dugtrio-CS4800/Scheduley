@@ -87,6 +87,16 @@ export default function WithAction() {
                             New Meeting
                         </Button>
                         </Link>
+                        <Link as={NextLink} href='/poll'>
+                        <Button color='white'
+                            variant={'solid'}
+                            bg={'#c14953'}
+                            size={'sm'}
+                            mr={4}
+                            leftIcon={<AddIcon />}>
+                            New Poll
+                        </Button>
+                        </Link>
                         <Menu>
                             {/* <MenuButton
                                 as={Button}
