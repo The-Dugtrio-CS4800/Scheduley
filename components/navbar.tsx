@@ -115,7 +115,13 @@ export default function WithAction() {
                     </Box>
                 ) : null}
             </Box>
-            <Flex h={20} alignItems={'center'} justifyContent={'center'}>
+            {/* <Flex h={20} alignItems={'center'} justifyContent={'center'}>
+                <img
+                    src="meeting.png"
+                    alt="Image Alt Text"
+                    style={{ marginBottom: '10px', width: '250px', height: 'auto' }}
+                />
+                
                 <Link as={NextLink} href='/new'>
                     <Button color='white'
                         variant={'solid'}
@@ -136,7 +142,32 @@ export default function WithAction() {
                     New Poll
                 </Button>
                 </Link>
-            </Flex>
+            </Flex> */}
+            
+            <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            height: 'calc(100vh - heightOfNavbar)', // Replace heightOfNavbar with the actual height of your navbar
+            boxSizing: 'border-box',
+            paddingTop: 'heightOfNavbar' // Replace heightOfNavbar with the actual height of your navbar
+            }}>
+            <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center'
+            }}>
+                <img src="meeting.png" alt="Descriptive Text" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
+                <button style={{ display: 'block', width: '100px' }}>
+                Click Me
+                </button>
+            </div>
+            </div>
+
+
+
         </>
     )
 }
