@@ -143,10 +143,10 @@ export default function WithAction() {
                 </Button>
                 </Link>
             </Flex> */}
-            
+
             <div style={{ 
             display: 'flex', 
-            flexDirection: 'column', 
+            flexDirection: 'row', 
             alignItems: 'center', 
             justifyContent: 'center', 
             height: 'calc(100vh - heightOfNavbar)', // Replace heightOfNavbar with the actual height of your navbar
@@ -157,15 +157,41 @@ export default function WithAction() {
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
-                justifyContent: 'center'
+                justifyContent: 'center',
+                margin: '0 10px' // Adds spacing between the combos
             }}>
-                <img src="meeting.png" alt="Descriptive Text" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
-                <button style={{ display: 'block', width: '100px' }}>
-                Click Me
-                </button>
+                <img src="meeting.png" alt="New meeting sample" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
+                <Link as={NextLink} href='/new'>
+                    <Button color='white'
+                        variant={'solid'}
+                        bg={'#c14953'}
+                        size={'sm'}
+                        mr={4}
+                        leftIcon={<AddIcon />}>
+                        New Meeting
+                    </Button>
+                </Link>
+            </div>
+            <div style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                margin: '0 10px' // Adds spacing between the combos
+            }}>
+                <img src="meeting.png" alt="New poll sample" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
+                <Link as={NextLink} href='/poll'>
+                <Button color='white'
+                    variant={'solid'}
+                    bg={'#c14953'}
+                    size={'sm'}
+                    mr={4}
+                    leftIcon={<AddIcon/>}>
+                    New Poll
+                </Button>
+                </Link>
             </div>
             </div>
-
 
 
         </>
