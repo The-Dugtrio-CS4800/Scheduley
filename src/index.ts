@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 import { connectToDatabase } from "./services/database.service"
 import { meetingsRouter } from "./routes/meetings.router";
 
@@ -7,6 +8,14 @@ const port = 8080; // default port to listen
 
 connectToDatabase()
     .then(() => {
+        const allowedOrigins = ['http://localhost:3000'];
+
+        const options: cors.CorsOptions = {
+            origin: allowedOrigins
+        };
+
+        app.use(cors(options));
+
         app.use("/meeting", meetingsRouter);
 
         app.listen(port, () => {

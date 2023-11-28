@@ -39,12 +39,13 @@ meetingsRouter.get("/:id", async (req: Request, res: Response) => {
 // POST
 meetingsRouter.post("/", async (req: Request, res: Response) => {
     try {
+        console.log(req.body)
         const newMeeting = req.body as Meeting;
         const result = await collections.meetings.insertOne(newMeeting);
 
         result
-            ? res.status(201).send(`Successfully created a new meeting with id ${result.insertedId}`)
-            : res.status(500).send("Failed to create a new meeting.");
+            ? res.status(201).send({id: result.insertedId})
+            : res.status(500).send({message: 'Failed to create a new meeting.'});
     } catch (error) {
         console.error(error);
         res.status(400).send(error.message);

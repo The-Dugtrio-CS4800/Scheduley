@@ -10,7 +10,7 @@ async function generateID() {
         const response = await fetch("http://localhost:8080/meeting", {
             method: "POST", // or 'PUT'
             headers: {
-                "Content-Type": "application/json",
+                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 name: "name"
@@ -19,7 +19,7 @@ async function generateID() {
 
         const result = await response.json();
         console.log("Success:", result);
-        return 234
+        return result.id;
     } catch (error) {
         console.error("Error:", error);
         return 999
