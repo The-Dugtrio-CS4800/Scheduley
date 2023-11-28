@@ -77,26 +77,6 @@ export default function WithAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                    <Link as={NextLink} href='/new'>
-                        <Button color='white'
-                            variant={'solid'}
-                            bg={'#c14953'}
-                            size={'sm'}
-                            mr={4}
-                            leftIcon={<AddIcon />}>
-                            New Meeting
-                        </Button>
-                        </Link>
-                        <Link as={NextLink} href='/poll'>
-                        <Button color='white'
-                            variant={'solid'}
-                            bg={'#c14953'}
-                            size={'sm'}
-                            mr={4}
-                            leftIcon={<AddIcon />}>
-                            New Poll
-                        </Button>
-                        </Link>
                         <Menu>
                             {/* <MenuButton
                                 as={Button}
@@ -135,6 +115,28 @@ export default function WithAction() {
                     </Box>
                 ) : null}
             </Box>
+            <Flex h={20} alignItems={'center'} justifyContent={'center'}>
+                <Link as={NextLink} href='/new'>
+                    <Button color='white'
+                        variant={'solid'}
+                        bg={'#c14953'}
+                        size={'sm'}
+                        mr={4}
+                        leftIcon={<AddIcon />}>
+                        New Meeting
+                    </Button>
+                </Link>
+                <Link as={NextLink} href='/poll'>
+                <Button color='white'
+                    variant={'solid'}
+                    bg={'#c14953'}
+                    size={'sm'}
+                    mr={4}
+                    leftIcon={<AddIcon/>}>
+                    New Poll
+                </Button>
+                </Link>
+            </Flex>
         </>
     )
 }
