@@ -77,16 +77,6 @@ export default function WithAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                    <Link as={NextLink} href='/new'>
-                        <Button color='white'
-                            variant={'solid'}
-                            bg={'#c14953'}
-                            size={'sm'}
-                            mr={4}
-                            leftIcon={<AddIcon />}>
-                            New Meeting
-                        </Button>
-                        </Link>
                         <Menu>
                             {/* <MenuButton
                                 as={Button}
