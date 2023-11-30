@@ -32,9 +32,6 @@ const Links = ['Sign Up', 'About Us']
 
 const NavLink = (props: Props) => {
     const { children } = props
-    const location = useLocation();
-    // Check if the current location is not the home screen
-    const isNotHome = location.pathname !== '/';
 
     return (
         <Box
@@ -48,34 +45,7 @@ const NavLink = (props: Props) => {
             }}
             href={'#'}>
             {children}
-            <Flex alignItems={'center'}>
-            {isNotHome && (
-                <div>
-                {/* Your buttons here */}
-                <Link as={NextLink} href='/new'>
-                    <Button color='white'
-                        variant={'solid'}
-                        bg={'#c14953'}
-                        size={'sm'}
-                        mr={4}
-                        leftIcon={<AddIcon />}>
-                        New Meeting
-                    </Button>
-                </Link>
-                <Link as={NextLink} href='/new'>
-                <Button color='white'
-                    variant={'solid'}
-                    bg={'#c14953'}
-                    size={'sm'}
-                    mr={4}
-                    leftIcon={<AddIcon />}>
-                    New Meeting
-                </Button>
-                </Link>
-                {/* ... other buttons */}
-                </div>
-            )}
-            </Flex>
+            
         </Box>
         
     )
@@ -83,8 +53,9 @@ const NavLink = (props: Props) => {
 
 export default function WithAction() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    
-    
+    const location = useLocation();
+    // Check if the current location is not the home screen
+    const isNotHome = location.pathname !== '/';
     
     return (
         <>
@@ -114,6 +85,33 @@ export default function WithAction() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
+                        {isNotHome && (
+                            <div>
+                            {/* Your buttons here */}
+                            <Link as={NextLink} href='/new'>
+                                <Button color='white'
+                                    variant={'solid'}
+                                    bg={'#c14953'}
+                                    size={'sm'}
+                                    mr={4}
+                                    leftIcon={<AddIcon />}>
+                                    New Meeting
+                                </Button>
+                            </Link>
+                            <Link as={NextLink} href='/new'>
+                            <Button color='white'
+                                variant={'solid'}
+                                bg={'#c14953'}
+                                size={'sm'}
+                                mr={4}
+                                leftIcon={<AddIcon />}>
+                                New Meeting
+                            </Button>
+                            </Link>
+                            {/* ... other buttons */}
+                            </div>
+                        )}
+            
                         <Menu>
                             {/* <MenuButton
                                 as={Button}
