@@ -21,8 +21,6 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
-import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 interface Props {
     children: React.ReactNode
@@ -32,7 +30,6 @@ const Links = ['Sign Up', 'About Us']
 
 const NavLink = (props: Props) => {
     const { children } = props
-
     return (
         <Box
             as="a"
@@ -45,18 +42,13 @@ const NavLink = (props: Props) => {
             }}
             href={'#'}>
             {children}
-            
         </Box>
-        
     )
 }
 
-const Navbar = () => {
+export default function WithAction() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const location = useLocation();
-    // Check if the current location is not the home screen
-    const isNotHome = location.pathname !== '/';
-    
+
     return (
         <>
             <Box bg= {useColorModeValue('#ffd9ce', '#ffd9ce')} px={4}>
@@ -85,33 +77,6 @@ const Navbar = () => {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        {isNotHome && (
-                            <div>
-                            {/* Your buttons here */}
-                            <Link as={NextLink} href='/new'>
-                                <Button color='white'
-                                    variant={'solid'}
-                                    bg={'#c14953'}
-                                    size={'sm'}
-                                    mr={4}
-                                    leftIcon={<AddIcon />}>
-                                    New Meeting
-                                </Button>
-                            </Link>
-                            <Link as={NextLink} href='/new'>
-                            <Button color='white'
-                                variant={'solid'}
-                                bg={'#c14953'}
-                                size={'sm'}
-                                mr={4}
-                                leftIcon={<AddIcon />}>
-                                New Meeting
-                            </Button>
-                            </Link>
-                            {/* ... other buttons */}
-                            </div>
-                        )}
-            
                         <Menu>
                             {/* <MenuButton
                                 as={Button}
@@ -150,110 +115,6 @@ const Navbar = () => {
                     </Box>
                 ) : null}
             </Box>
-            {/* <Flex h={20} alignItems={'center'} justifyContent={'center'}>
-                <img
-                    src="meeting.png"
-                    alt="Image Alt Text"
-                    style={{ marginBottom: '10px', width: '250px', height: 'auto' }}
-                />
-                
-                <Link as={NextLink} href='/new'>
-                    <Button color='white'
-                        variant={'solid'}
-                        bg={'#c14953'}
-                        size={'sm'}
-                        mr={4}
-                        leftIcon={<AddIcon />}>
-                        New Meeting
-                    </Button>
-                </Link>
-                <Link as={NextLink} href='/poll'>
-                <Button color='white'
-                    variant={'solid'}
-                    bg={'#c14953'}
-                    size={'sm'}
-                    mr={4}
-                    leftIcon={<AddIcon/>}>
-                    New Poll
-                </Button>
-                </Link>
-            </Flex> */}
-
-            <div style={{ 
-            display: 'flex', 
-            flexDirection: 'row', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            height: 'calc(100vh - heightOfNavbar)', // Replace heightOfNavbar with the actual height of your navbar
-            boxSizing: 'border-box',
-            paddingTop: 'heightOfNavbar' // Replace heightOfNavbar with the actual height of your navbar
-            }}>
-            <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 10px' // Adds spacing between the combos
-            }}>
-                <img src="meeting.png" alt="New meeting sample" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
-                <Link as={NextLink} href='/new'>
-                    <Button color='white'
-                        variant={'solid'}
-                        bg={'#c14953'}
-                        size={'sm'}
-                        mr={4}
-                        leftIcon={<AddIcon />}>
-                        New Meeting
-                    </Button>
-                </Link>
-            </div>
-            <div style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                margin: '0 10px' // Adds spacing between the combos
-            }}>
-                <img src="meeting.png" alt="New poll sample" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
-                <Link as={NextLink} href='/poll'>
-                <Button color='white'
-                    variant={'solid'}
-                    bg={'#c14953'}
-                    size={'sm'}
-                    mr={4}
-                    leftIcon={<AddIcon/>}>
-                    New Poll
-                </Button>
-                </Link>
-            </div>
-            </div>
-
-
         </>
     )
 }
-
-export default Navbar;
-
-// function Navbar() {
-//   const location = useLocation();
-
-//   // Check if the current location is not the home screen
-//   const isNotHome = location.pathname !== '/';
-
-//   return (
-//     <nav>
-//       {/* Your navbar content here */}
-      
-//       {/* Conditionally render buttons if not on the home screen */}
-//       {isNotHome && (
-//         <div>
-//           {/* Your buttons here */}
-//           <button>Button 1</button>
-//           <button>Button 2</button>
-//           {/* ... other buttons */}
-//         </div>
-//       )}
-//     </nav>
-//   );
-// }
