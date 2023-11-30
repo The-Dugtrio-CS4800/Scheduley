@@ -51,7 +51,7 @@ const NavLink = (props: Props) => {
     )
 }
 
-export default function WithAction() {
+const Navbar = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const location = useLocation();
     // Check if the current location is not the home screen
@@ -154,6 +154,7 @@ export default function WithAction() {
     )
 }
 
+export default Navbar;
 
 // function Navbar() {
 //   const location = useLocation();
