@@ -5,7 +5,6 @@ import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react';
 import { Box } from "@chakra-ui/react"
 
-
 function MyApp({ Component, pageProps }) {
     return (
         // <Providers>
