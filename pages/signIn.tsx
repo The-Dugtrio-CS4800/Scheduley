@@ -2,7 +2,8 @@
 // import React, {useState} from "react";
 // import App from "../components/App";
 // import Link from 'next/link'
-import Navbar from "../../../components/navbar";
+// import Navbar from "../components/navbar";
+import Navbar from "../components/navbar";
 
 import {
     Box,
@@ -19,33 +20,29 @@ import {
     Stack,
     Text
   } from '@chakra-ui/react'
-  // import { Logo } from '../components/Logo'
-  import { OAuthButtonGroup } from '../../../components/OAuthButtonGroup'
-  import { PasswordField } from '../../../components/PasswordField'
-  import { signIn } from 'next-auth/react';
-  import React, { useRef } from "react";
+  import { OAuthButtonGroup } from '../components/OAuthButtonGroup'
+  import { PasswordField } from '../components/PasswordField'
+  import { useSession, signIn, signOut } from 'next-auth/react';
+  // import React, { useRef } from "react";
 
 
 export default function SignIn() {
-
-  //try to connect these functions with the login page and submit button
-    
-  // const userName = useRef("");
-  // const pass = useRef("");
-  
-
-  const onSubmit = async () => {
-    const result = await signIn("credentials", {
-      userName: userName.current,
-      password: pass.current,
-      redirect: true,
-      callbackUrl: "/",
-    });
-  };
+    const { data: session } = useSession()
+    if (session) {
+      return (
+        <>
+        <Navbar/>
+          Signed in as {session?.user?.email} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </>
+      )
+    }
 
     return (<>
 
         <Navbar/>
+        {/* Not signed in <br />
+        <button onClick={() => signIn()}>Sign in</button> */}
         <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
       <Stack spacing="8">
         <Stack spacing="6">
@@ -67,7 +64,7 @@ export default function SignIn() {
             <Stack spacing="5">
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input onChange={(e) => (userName.current = e.target.value)} id="email" type="email " />
+                <Input id="email" type="email " />
               </FormControl>
               <PasswordField/>
             </Stack>

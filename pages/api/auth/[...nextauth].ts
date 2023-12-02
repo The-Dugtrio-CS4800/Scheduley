@@ -1,39 +1,23 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth"
+import GithubProvider from "next-auth/providers/github"
+import { MongoDBAdapter } from "@auth/mongodb-adapter"
+import clientPromise from "../../../lib/mongodb";
+import dbConnect from "../../../../lib/dbConnect";
+
 export default NextAuth({
+  // Configure one or more authentication providers
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
-
-      credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-
-        const res = await fetch("http://localhost:3000/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: credentials?.username,
-            password: credentials?.password,
-          }),
-        });
-        const user = await res.json();
-
-        if (user) {
-          return user;
-        } else {
-          return null;
-        }
-      },
+    GithubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
     }),
+    // ...add more providers here
   ],
-
-  pages: {
-    signIn: "/auth/signIn",
-  },
+  // pages: {
+  //   signIn: "/auth",
+  // },
+  
+  //debugging process that sends data in console
+  debug: process.env.NODE_ENV === "development",
+  adapter: MongoDBAdapter(clientPromise),
 });
