@@ -1,8 +1,8 @@
 // import { Input, Stack, Heading, InputGroup, InputLeftAddon, InputRightAddon, InputRightElement, Button} from '@chakra-ui/react'
 // import React, {useState} from "react";
-import App from "../components/App";
+// import App from "../components/App";
 // import Link from 'next/link'
-import Navbar from "../components/navbar";
+import Navbar from "../../../components/navbar";
 
 import {
     Box,
@@ -17,15 +17,31 @@ import {
     Input,
     Link,
     Stack,
-    Text,
-    Image
+    Text
   } from '@chakra-ui/react'
-  import { Logo } from '../components/Logo'
-  import { OAuthButtonGroup } from '../components/OAuthButtonGroup'
-  import { PasswordField } from '../components/PasswordField'
+  // import { Logo } from '../components/Logo'
+  import { OAuthButtonGroup } from '../../../components/OAuthButtonGroup'
+  import { PasswordField } from '../../../components/PasswordField'
+  import { signIn } from 'next-auth/react';
+  import React, { useRef } from "react";
 
 
 export default function SignIn() {
+
+  //try to connect these functions with the login page and submit button
+    
+  // const userName = useRef("");
+  // const pass = useRef("");
+  
+
+  const onSubmit = async () => {
+    const result = await signIn("credentials", {
+      userName: userName.current,
+      password: pass.current,
+      redirect: true,
+      callbackUrl: "/",
+    });
+  };
 
     return (<>
 
@@ -51,9 +67,9 @@ export default function SignIn() {
             <Stack spacing="5">
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" type="email" />
+                <Input onChange={(e) => (userName.current = e.target.value)} id="email" type="email " />
               </FormControl>
-              <PasswordField />
+              <PasswordField/>
             </Stack>
             <HStack justify="space-between">
               <Checkbox defaultChecked>Remember me</Checkbox>
@@ -62,7 +78,7 @@ export default function SignIn() {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button>Sign in</Button>
+              <Button onClick={() => signIn()}>Sign in</Button>
               <HStack>
                 <Divider />
                 <Text textStyle="sm" whiteSpace="nowrap" color="fg.muted">
