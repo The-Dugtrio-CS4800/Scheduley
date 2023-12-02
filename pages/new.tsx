@@ -5,15 +5,16 @@ import {Calendar, DateObject} from "react-multi-date-picker"
 import Navbar from "../components/navbar";
 import {useRouter} from "next/router";
 
-async function generateID() {
+async function generateMeeting(dates) {
     try {
-        const response = await fetch("http://localhost:8080/meeting", {
+        const response = await fetch("http://ec2-3-144-5-179.us-east-2.compute.amazonaws.com:8080/meeting", {
             method: "POST", // or 'PUT'
             headers: {
                  "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: "name"
+                name: "name",
+                dates: dates
             }),
         });
 
@@ -21,6 +22,7 @@ async function generateID() {
         console.log("Success:", result);
         return result.id;
     } catch (error) {
+        // return random value for now, this should prevent you from proceeding later
         console.error("Error:", error);
         return 999
     }
@@ -58,8 +60,8 @@ export default function New() {
                                     console.log(date.format())
                                 })
                             })
-                            id = await generateID();
-                            router.push(`/meeting/${encodeURIComponent(id)}`)
+                            id = await generateMeeting(dates);
+                            await router.push(`/meeting/${encodeURIComponent(id)}`)
                         }}>
                     Submit
                 </Button>
