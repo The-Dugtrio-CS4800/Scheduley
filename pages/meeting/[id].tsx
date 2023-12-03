@@ -4,7 +4,8 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import ScheduleSelector from 'react-schedule-selector'
 import ScheduleViewer from "../../components/scheduleViewer";
-import {Button, HStack, VStack} from "@chakra-ui/react";
+import {Button, HStack, Input, VStack} from "@chakra-ui/react";
+import { Text } from '@chakra-ui/react'
 
 export default function Meeting() {
     const router = useRouter()
@@ -12,6 +13,10 @@ export default function Meeting() {
     const [scheduleViewer, setScheduleViewer] = useState([])
     const [participants, setParticipants] = useState([])
     const [startDate, setStartDate] = useState<Date>()
+    const [activeParticipant, setActiveParticipant] = useState(participants[0])
+    const [name, setName] = useState("")
+    const [allParticipants, setAllParticipants] = useState(true)
+    const [hoveredDate, setHoveredDate] = useState(null)
 
     useEffect(() => {
         const getDates = async (id) => {
@@ -43,15 +48,31 @@ export default function Meeting() {
         }
     }, [router.isReady]);
 
+    // if a specific participant is selected, display that schedule
     useEffect(() => {
-        console.log(scheduleViewer);
-        console.log(`Start Date:` + startDate)
-    }, [scheduleViewer, startDate])
+        if (activeParticipant) {
+            setScheduleViewer(activeParticipant.schedule)
+            setAllParticipants(false)
+        }
+    }, [activeParticipant])
+
+    // if all participants want to be shown, display them
+    useEffect(() => {
+        if (allParticipants) {
+            setActiveParticipant(null)
+            setScheduleViewer([])
+        }
+    }, [allParticipants])
+
+    // handle hovering date change
+    const handleHoverChange = (date) => {
+        setHoveredDate(date)
+    }
 
     function updateSchedule(){
         participants.push(
             {
-                name: "name",
+                name: name,
                 schedule: schedule,
             }
         )
@@ -65,7 +86,10 @@ export default function Meeting() {
             <VStack >
                 <HStack
                 spacing ={50}>
+                    <VStack>
+                    <Text>Choose Availability</Text>
                     {/*only show the schedule selector when the startDate has been initialized*/}
+
                     {startDate && <ScheduleSelector
 
                         selection={schedule}
@@ -76,10 +100,17 @@ export default function Meeting() {
                         hourlyChunks={2}
                         timeFormat="h:mma"
                         onChange={setSchedule}
+                        columnGap={'4px'}
+                        rowGap={'4px'}
                     />}
+                    </VStack>
+                    <VStack>
+                        {/*display all availibility or person's name text*/}
+                        {activeParticipant ? <Text>{activeParticipant.name}'s Availibility</Text> : <Text>All Participants</Text> }
                     <ScheduleViewer
+                        onHoverChange={handleHoverChange}
                         selection={scheduleViewer}
-                        selectionScheme={'square'}
+                        startDate={startDate}
                         numDays={5}
                         minTime={8}
                         maxTime={22}
@@ -88,20 +119,73 @@ export default function Meeting() {
                         onChange={setScheduleViewer}
                         hoveredColor={'none'}
                         selectedColor={'blue'}
-                        unselectedColor={'purple'}
+                        unselectedColor={'grey'}
                         participants={participants}
+                        allParticipants={allParticipants}
+                        rowGap = {'2px'}
+                        columnGap = {'4px'}
                     />
+                    </VStack>
+                    <VStack>
+                        {/* display who is available on the hovered date*/}
+                        {hoveredDate && <VStack>
+                            <Text>Available:</Text>
+                            {participants.filter(
+                                (participant) => participant.schedule.find(
+                                    item => {
+                                        return item.getTime() == hoveredDate.getTime()
+                                    })).map(participant =>(
+                                <Text> {participant.name}</Text>
+                            ))}
+                        </VStack>}
+                        {/*display all participants button*/}
+                        <Button
+                            background = 'none'
+                            _hover={{ bg: 'none' }}
+                            _focus={{
+                                bg: 'none',
+                                color: 'blue',
+                            }}
+                            onClick = {()=>{
+                                setAllParticipants(true)
+                            }}
+                        > See all availabilities</Button>
+                        {/* create a button for each participant*/}
+                        {participants.map(participant =>(
+                            <Button
+                                background = 'none'
+                                _hover={{ bg: 'none' }}
+                                _focus={{
+                                    bg: 'none',
+                                    color: 'blue',
+                                }}
+                                onClick = {()=>{
+                                    setActiveParticipant(participant)
+                                }}
+                            > {participant.name}</Button>
+                            ))
+                        }
+                    </VStack>
+                </HStack>
+                <HStack>
+                {/* input particpant name*/}
+                <Input
+                    value ={name}
+                    onChange = {(e) => setName(e.target.value)}
+                    placeholder='Enter name'
+                    size='sm'
+                />
                     <Button
                         padding={5}
                         margin={5}
-                        onClick={()=>{updateSchedule()
-                            setScheduleViewer(schedule)
+                        onClick={()=>{
+                            updateSchedule()
                             setSchedule([])}}
                     >
                         Add availability
                     </Button>
-                </HStack>
 
+                </HStack>
             </VStack>
         </div>
     }</>;

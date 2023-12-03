@@ -47,8 +47,8 @@ const DateLabel = styled(Subtitle)`
   @media (max-width: 699px) {
     font-size: 12px;
   }
-  margin: 0;
-  margin-bottom: 4px;
+  //margin: 0;
+  //margin-bottom: 4px;
 `
 
 const TimeText = styled(Text)`
@@ -56,12 +56,12 @@ const TimeText = styled(Text)`
     font-size: 10px;
   }
   text-align: right;
-  margin: 0;
-  margin-right: 4px;
+  //margin: 0;
+  //margin-right: 4px;
 `
 type Participant = {
   name: string
-  availability: Array<Date>
+  schedule: Array<Date>
 }
 
 type PropsType = {
@@ -84,6 +84,8 @@ type PropsType = {
   renderTimeLabel?: (time: Date) => JSX.Element
   renderDateLabel?: (date: Date) => JSX.Element
   participants: Array<Participant>
+  allParticipants: boolean
+  onHoverChange: (time: Date) => void
 }
 
 type StateType = {
@@ -94,6 +96,7 @@ type StateType = {
   selectionStart: Date | null
   isTouchDragging: boolean
   dates: Array<Array<Date>>
+  hoveredDate: Date | null
 }
 
 export const preventScroll = (e: TouchEvent) => {
@@ -131,6 +134,7 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
     participants: [],
   }
 
+
   static getDerivedStateFromProps(props: PropsType, state: StateType): Partial<StateType> | null {
     // As long as the user isn't in the process of selecting, allow prop changes to re-populate selection state
     if (state.selectionStart == null) {
@@ -166,7 +170,8 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
       selectionType: null,
       selectionStart: null,
       isTouchDragging: false,
-      dates: ScheduleViewer.computeDatesMatrix(props)
+      dates: ScheduleViewer.computeDatesMatrix(props),
+      hoveredDate: null
     }
 
     this.selectionSchemeHandlers = {
@@ -274,11 +279,19 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
     // where the user just clicks on a single cell (because no mouseenter events fire
     // in this scenario)
     this.updateAvailabilityDraft(time)
+
   }
 
   handleMouseUpEvent(time: Date) {
     this.updateAvailabilityDraft(time)
     // Don't call this.endSelection() here because the document mouseup handler will do it
+  }
+
+  handleMouseOverEvent(time: Date) {
+    this.props.onHoverChange(time)
+  }
+  handleMouseOutEvent() {
+    this.props.onHoverChange(null)
   }
 
   handleTouchMoveEvent(event: React.TouchEvent) {
@@ -315,10 +328,18 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
         className="rgdp__grid-cell"
         role="presentation"
         key={time.toISOString()}
+        onMouseOver={() => {
+              this.handleMouseOverEvent(time)
+             // console.log("mouse over" + time)
+        }}
+        onMouseOut={() => {
+          this.handleMouseOutEvent()
+          // console.log("mouse over" + time)
+        }}
         // Mouse handlers
         // onMouseDown={startHandler}
         // onMouseEnter={() => {
-        //   this.handleMouseEnterEvent(time)
+        //    this.handleMouseEnterEvent(time)
         // }}
         // onMouseUp={() => {
         //   this.handleMouseUpEvent(time)
@@ -331,12 +352,12 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
         // onTouchMove={this.handleTouchMoveEvent}
         // onTouchEnd={this.handleTouchEndEvent}
       >
-        {this.renderDateCell(time, selected)}
+        {this.renderDateCell(time, selected, this.props.allParticipants)}
       </GridCell>
     )
   }
 
-  renderDateCell = (time: Date, selected: boolean): JSX.Element => {
+  renderDateCell = (time: Date, selected: boolean, allParticipants: boolean): JSX.Element => {
     const refSetter = (dateCell: HTMLElement | null) => {
       if (dateCell) {
         this.cellToDate.set(dateCell, time)
@@ -345,16 +366,31 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
     if (this.props.renderDateCell) {
       return this.props.renderDateCell(time, selected, refSetter)
     } else {
-      const degree = this.props.participants.length;
-      return (
-        <DateCell
-          selected={selected}
-          ref={refSetter}
-          selectedColor={this.props.selectedColor}
-          unselectedColor={this.props.unselectedColor}
-          hoveredColor={this.props.hoveredColor}
+      if (allParticipants) {
+        const degree = this.props.participants.filter(
+            (participant) => participant.schedule.find(
+                item => {
+                  return item.getTime() == time.getTime()
+                })).length;
+        return (
+            <DateCell
+                selected={degree > 0}
+                ref={refSetter}
+                selectedColor={`hsl(157, 59%, ${100 - degree * 10}%)`}
+                unselectedColor={this.props.unselectedColor}
+                hoveredColor={this.props.hoveredColor}
+            />
+        )
+      } else {
+        return (<DateCell
+            selected={selected}
+            ref={refSetter}
+            selectedColor={this.props.selectedColor}
+            unselectedColor={this.props.unselectedColor}
+            hoveredColor={this.props.hoveredColor}
         />
-      )
+        )
+      }
     }
   }
 

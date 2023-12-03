@@ -9,7 +9,7 @@ export const collections: { meetings?: mongoDB.Collection, users?: mongoDB.Colle
 export async function connectToDatabase () {
     dotenv.config();
  
-    const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
+    const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.MONGODB_URI);
             
     await client.connect();
         
