@@ -30,29 +30,49 @@ import {
   import { PasswordField } from '../components/PasswordField'
   import { useSession, signIn, signOut, getProviders} from 'next-auth/react';
   // import React, { useRef } from "react";
+  import { GitHubIcon, GoogleIcon, TwitterIcon } from '../components/ProviderIcons'
 
     
 
-    const Background = ({ children }: any) => (
-      <Box
-        display="flex"
-        flex="1 1 auto"
-        justifyContent="center"
-        alignItems="center"
-        backgroundImage="url('/blob-scene-haikei.svg')" // coming from public folder
-        backgroundSize="cover"
-        backgroundRepeat="no-repeat"
-        backgroundPosition="center"
-        backgroundAttachment="fixed"
-        width="100%"
-        height="100%"
-        color="white"
-      >
-        {children}
-      </Box>
-    );
+    // const Background = ({ children }: any) => (
+    //   <Box
+    //     display="flex"
+    //     flex="1 1 auto"
+    //     justifyContent="center"
+    //     alignItems="center"
+    //     backgroundImage="url('/blob-scene-haikei.svg')" // coming from public folder
+    //     backgroundSize="cover"
+    //     backgroundRepeat="no-repeat"
+    //     backgroundPosition="center"
+    //     backgroundAttachment="fixed"
+    //     width="100%"
+    //     height="100%"
+    //     color="white"
+    //   >
+    //     {children}
+    //   </Box>
+    // );
 
-    const SignIn: NextPage = ({providers}: any) => {
+    export default function SignIn() {
+      const Background = ({ children }: any) => (
+        <Box
+          display="flex"
+          flex="1 1 auto"
+          justifyContent="center"
+          alignItems="center"
+          backgroundImage="url('/blob-scene-haikei.svg')" // coming from public folder
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          backgroundPosition="center"
+          backgroundAttachment="fixed"
+          width="100%"
+          height="100%"
+          color="white"
+        >
+          {children}
+        </Box>
+      );
+
       const [authType, setAuthType] = useState("Login");
       const oppAuthType: { [key: string]: string } = {
         Login: "Register",
@@ -60,32 +80,36 @@ import {
       };
       const [username, setUsername] = useState("");
       const [email, setEmail] = useState("");
-      const [password] = useState("");
+      const [password, setPassword] = useState("");
 
-      // const ProvidersButtons = ({ providers }: any) => (
-      //   <Flex direction="column" w="100%">
-      //     {Object.values(providers).map(
-      //       (provider: any) =>
-      //         provider.name !== "Credentials" && (
-      //           <Button
-      //             key={provider.name}
-      //             mb={4}
-      //             bg={"#24292E"}
-      //             color={"white"}
-      //             _hover={{ bg: "#24292E90" }}
-      //             type="submit"
-      //             onClick={() => {
-      //               signIn(provider.id, {
-      //                 callbackUrl: `${process.env.URL_DEV}/`,
-      //               });
-      //             }}
-      //           >
-      //             <Box>Sign in with {provider.name}</Box>
-      //           </Button>
-      //         )
-      //     )}
-      //   </Flex>
-      // );
+      const providers = [
+        { name: 'GitHub', icon: <GitHubIcon /> },
+      ]
+
+      const ProvidersButtons = ({ providers }: any) => (
+        <Flex direction="column" w="100%">
+          {Object.values(providers).map(
+            (provider: any) =>
+              provider.name !== "Credentials" && (
+                <Button
+                  key={provider.name}
+                  mb={4}
+                  bg={"#24292E"}
+                  color={"white"}
+                  _hover={{ bg: "#24292E90" }}
+                  type="submit"
+                  onClick={() => {
+                    signIn(provider.id, {
+                      callbackUrl: `${window.location.origin}`,
+                    });
+                  }}
+                >
+                  <Box>Sign in with {provider.name}</Box>
+                </Button>
+              )
+          )}
+        </Flex>
+      );
 
     const redirectToHome = () => {
       //route from /signIn to /
@@ -170,10 +194,20 @@ import {
           >
             <Stack spacing="3">
               <Stack spacing="3">
-                <FormControl isRequired mb={6}>
+                {authType === "Register" && (
+                  <Field name="username">
+                    {() => (
+                      <FormControl isRequired mb={6}>
+                      <FormLabel color="black" htmlFor="username">Name:</FormLabel>
+                      <Input color="black" id="username" type="username" onChange={(e) => setUsername(e.target.value)} placeholder="Name" />
+                      </FormControl>
+                    )}
+                    </Field>
+                )}
+                {/* <FormControl isRequired mb={6}>
                   <FormLabel color="black" htmlFor="username">Name:</FormLabel>
                   <Input color="black" id="username" type="username" onChange={(e) => setUsername(e.target.value)} placeholder="Name" />
-                </FormControl>
+                </FormControl> */}
                 <FormControl isRequired mb={6}>
                   <FormLabel color="black" htmlFor="email">Email:</FormLabel>
                   <Input color="black" id="email" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" />
@@ -189,8 +223,8 @@ import {
                   </Text>
                   <Divider />
                 </HStack>
-                <OAuthButtonGroup />
-                {/* <ProvidersButtons providers={providers} /> */}
+                {/* <OAuthButtonGroup /> */}
+                <ProvidersButtons providers={providers} />
               </Stack>
             </Stack>
           </Box>
@@ -202,5 +236,5 @@ import {
     </>)
   };
 
-  export default SignIn;
+  // export default SignIn;
 
