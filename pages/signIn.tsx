@@ -18,6 +18,7 @@ import {
     Divider,
     FormControl,
     FormLabel,
+    Flex,
     Heading,
     HStack,
     Input,
@@ -59,7 +60,32 @@ import {
       };
       const [username, setUsername] = useState("");
       const [email, setEmail] = useState("");
-      const [password, setPassword] = useState("");
+      const [password] = useState("");
+
+      // const ProvidersButtons = ({ providers }: any) => (
+      //   <Flex direction="column" w="100%">
+      //     {Object.values(providers).map(
+      //       (provider: any) =>
+      //         provider.name !== "Credentials" && (
+      //           <Button
+      //             key={provider.name}
+      //             mb={4}
+      //             bg={"#24292E"}
+      //             color={"white"}
+      //             _hover={{ bg: "#24292E90" }}
+      //             type="submit"
+      //             onClick={() => {
+      //               signIn(provider.id, {
+      //                 callbackUrl: `${process.env.URL_DEV}/`,
+      //               });
+      //             }}
+      //           >
+      //             <Box>Sign in with {provider.name}</Box>
+      //           </Button>
+      //         )
+      //     )}
+      //   </Flex>
+      // );
 
     const redirectToHome = () => {
       //route from /signIn to /
@@ -71,6 +97,7 @@ import {
       // call register API
       //create register API
       const res = await axios.post("/api/register", {
+        username,
         email,
         password
       },
@@ -85,8 +112,10 @@ import {
         await loginUser();
         redirectToHome();
       })
-      .catch((error) => console.log(error));
-
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log(res);
     };
 
     const loginUser = async () => {
@@ -152,7 +181,7 @@ import {
                 <PasswordField />
               </Stack>
               <Stack spacing="6">
-                <Button bg="#C55962" _hover={{ bg: "red.200" }} isLoading={props.isSubmitting}color="white" onClick={() => signIn()}>{authType}</Button>
+                <Button bg="#C55962" _hover={{ bg: "red.200" }} isLoading={props.isSubmitting} color="white" type="submit">{authType}</Button>
                 <HStack>
                   <Divider />
                   <Text color="black" textStyle="sm" whiteSpace="nowrap">
@@ -161,6 +190,7 @@ import {
                   <Divider />
                 </HStack>
                 <OAuthButtonGroup />
+                {/* <ProvidersButtons providers={providers} /> */}
               </Stack>
             </Stack>
           </Box>
@@ -168,59 +198,6 @@ import {
       </Container>
       )}
     </Formik>
-
-          {/* <Formik
-            initialValues={{}} // { email: "", password: "" }
-            validateOnChange={false}
-            validateOnBlur={false}
-            onSubmit={(_, actions) => {
-              formSubmit(actions);
-            }}
-          >
-            {(props) => (
-              <Form style={{ width: "100%" }}>
-                <Box display="flex" flexDirection="column" w="100%" mb={4}>
-                  {authType === "Register"}
-                  <Field name="email">
-                    {() => (
-                      <FormControl isRequired mb={6}>
-                        <FormLabel htmlFor="email">Email:</FormLabel>
-                        <Input
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="Email Address"
-                          background={"blue.600"}
-                        />
-                      </FormControl>
-                    )}
-                  </Field>
-                  <Field name="password">
-                    {() => (
-                      <FormControl isRequired mb={3}>
-                        <FormLabel htmlFor="password">Password</FormLabel>
-                        <Input
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          type="password"
-                          placeholder="Password"
-                          background={"blue.600"}
-                        />
-                      </FormControl>
-                    )}
-                  </Field>
-                  <Button
-                    mt={6}
-                    bg="blue.400"
-                    _hover={{ bg: "blue.200" }}
-                    isLoading={props.isSubmitting}
-                    type="submit"
-                  >
-                    {authType}
-                  </Button>
-                </Box>
-              </Form>
-            )}
-          </Formik> */}
     </Background>
     </>)
   };
