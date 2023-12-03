@@ -72,6 +72,26 @@ export default function WithAction() {
                         {/* <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             <Link as= {NextLink} href='/signIn'> Sign In </Link>
                         </HStack> */}
+                        <Link as={NextLink} href='/new'>
+                            <Button color='white'
+                                variant={'solid'}
+                                bg={'#c14953'}
+                                size={'sm'}
+                                mr={4}
+                                leftIcon={<AddIcon />}>
+                                New Meeting
+                            </Button>
+                        </Link>
+                        <Link as={NextLink} href='/newPoll'>
+                            <Button color='white'
+                                variant={'solid'}
+                                bg={'#c14953'}
+                                size={'sm'}
+                                mr={4}
+                                leftIcon={<AddIcon />}>
+                                New Poll
+                            </Button>
+                        </Link>
                     </HStack>
                     <Flex alignItems={'center'}>
                         {/* if you're adding to the navbar, only add within session ? if you want the component

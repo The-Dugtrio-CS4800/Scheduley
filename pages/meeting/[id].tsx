@@ -7,16 +7,73 @@ import ScheduleViewer from "../../components/scheduleViewer";
 import {Button, HStack, Input, VStack} from "@chakra-ui/react";
 import { Text } from '@chakra-ui/react'
 
+const updateSchedule = async(id, participant, dates) => {
+
+    const getResponse = await fetch("http://localhost:8080/meeting/" + id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    // store the result
+    const result = await getResponse.json();
+    console.log("Success:", result);
+    if (result.participants) {
+        result.participants.push({
+            name: participant,
+            schedule: dates
+        })
+    } else {
+        result.participants = [{
+            name: participant,
+            schedule: dates
+        }]
+    }
+
+    const putResponse = await fetch("http://localhost:8080/meeting/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            participants: result.participants
+        }),
+    });
+    const putResult = await putResponse.json();
+    console.log("Success:", putResult);
+    const getResponseAfterPut = await fetch("http://localhost:8080/meeting/" + id, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    // store the result
+    const getPutResult = await getResponseAfterPut.json();
+    console.log("Success:", getPutResult);
+    getPutResult.participants.map((participant) => {
+        console.log("mapping participant name:" + participant)
+        for (let index = 0; index < participant.schedule.length; index++) {
+            console.log("mapping date:" + participant.schedule[index])
+            participant.schedule[index] = new Date(JSON.parse(JSON.stringify(participant.schedule[index])))
+        }
+    })
+    console.log(getPutResult.participants)
+    return getPutResult.participants
+}
+
 export default function Meeting() {
     const router = useRouter()
     const [schedule, setSchedule] = useState([])
     const [scheduleViewer, setScheduleViewer] = useState([])
     const [participants, setParticipants] = useState([])
     const [startDate, setStartDate] = useState<Date>()
-    const [activeParticipant, setActiveParticipant] = useState(participants[0])
+    const [numDays, setNumDays] = useState(5)
+    const [activeParticipant, setActiveParticipant] = useState(null)
     const [name, setName] = useState("")
+    const [meetingName, setMeetingName] = useState("")
     const [allParticipants, setAllParticipants] = useState(true)
     const [hoveredDate, setHoveredDate] = useState(null)
+    const [meetingID, setMeetingID] = useState(null)
 
     useEffect(() => {
         const getDates = async (id) => {
@@ -34,8 +91,23 @@ export default function Meeting() {
                 const result = await response.json();
                 console.log("Success:", result);
                 // get the start date of the meeting from the result
-                const newStartDate = new Date(parseInt(result.dates[0]))
+                const newStartDate = new Date(parseInt(result.dates[0][0]))
+                const endDate = new Date(parseInt(result.dates[0][1]))
+                const time_difference = endDate.getTime() - newStartDate.getTime()
+                const days_difference = Math.ceil(time_difference / (1000 * 60 * 60 * 24))
                 setStartDate(newStartDate)
+                setNumDays(days_difference+1)
+                setMeetingName(result.name)
+                if (!result.hasOwnProperty('participants')){
+                    result.participants.map((participant) => {
+                        console.log("mapping participant name:" + participant)
+                        for (let index = 0; index < participant.schedule.length; index++) {
+                            console.log("mapping date:" + participant.schedule[index])
+                            participant.schedule[index] = new Date(JSON.parse(JSON.stringify(participant.schedule[index])))
+                        }
+                    })
+                }
+                setParticipants(result.participants)
             } catch (error) {
                 console.error("Error:", error);
                 return false
@@ -45,6 +117,7 @@ export default function Meeting() {
         // prevent undefined query ids upon reload
         if (router.isReady){
             getDates(router.query.id).catch(console.error)
+            setMeetingID(router.query.id)
         }
     }, [router.isReady]);
 
@@ -68,33 +141,30 @@ export default function Meeting() {
     const handleHoverChange = (date) => {
         setHoveredDate(date)
     }
+    useEffect(() => {
+        console.log("participants" + participants)
+    }, [participants])
 
-    function updateSchedule(){
-        participants.push(
-            {
-                name: name,
-                schedule: schedule,
-            }
-        )
-    }
+
+
 
     return <>{
 
         <div>
             <Navbar/>
-            {router.query.id}
             <VStack >
+                <Text>{meetingName}</Text>
                 <HStack
                 spacing ={50}>
                     <VStack>
                     <Text>Choose Availability</Text>
                     {/*only show the schedule selector when the startDate has been initialized*/}
 
-                    {startDate && <ScheduleSelector
+                    {startDate && numDays &&<ScheduleSelector
 
                         selection={schedule}
                         startDate={startDate}
-                        numDays={5}
+                        numDays={numDays? numDays : 5}
                         minTime={8}
                         maxTime={22}
                         hourlyChunks={2}
@@ -111,14 +181,14 @@ export default function Meeting() {
                         onHoverChange={handleHoverChange}
                         selection={scheduleViewer}
                         startDate={startDate}
-                        numDays={5}
+                        numDays={numDays? numDays : 5}
                         minTime={8}
                         maxTime={22}
                         hourlyChunks={2}
                         timeFormat="h:mma"
                         onChange={setScheduleViewer}
                         hoveredColor={'none'}
-                        selectedColor={'blue'}
+                        selectedColor={`hsl(157, 59%, 50%)`}
                         unselectedColor={'grey'}
                         participants={participants}
                         allParticipants={allParticipants}
@@ -133,7 +203,7 @@ export default function Meeting() {
                             {participants.filter(
                                 (participant) => participant.schedule.find(
                                     item => {
-                                        return item.getTime() == hoveredDate.getTime()
+                                        return new Date(JSON.parse(JSON.stringify(item))).getTime() == hoveredDate.getTime()
                                     })).map(participant =>(
                                 <Text> {participant.name}</Text>
                             ))}
@@ -178,8 +248,8 @@ export default function Meeting() {
                     <Button
                         padding={5}
                         margin={5}
-                        onClick={()=>{
-                            updateSchedule()
+                        onClick={async ()=>{
+                            setParticipants(await updateSchedule(meetingID, name, schedule))
                             setSchedule([])}}
                     >
                         Add availability
