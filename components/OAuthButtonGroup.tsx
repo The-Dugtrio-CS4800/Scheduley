@@ -11,7 +11,7 @@ const providers = [
 export const OAuthButtonGroup = () => (
   <ButtonGroup variant="secondary" spacing="4">
     {providers.map(({ name, icon }) => (
-      <Button onClick={() => signIn()} key={name} flexGrow={1}>
+      <Button color="black" onClick={() => signIn()} key={name} flexGrow={1}>
         <VisuallyHidden>Sign in with {name}</VisuallyHidden>
         {icon}
       </Button>
