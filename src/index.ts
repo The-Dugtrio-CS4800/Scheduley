@@ -2,7 +2,7 @@ import express from "express";
 import cors from 'cors';
 import { connectToDatabase } from "./services/database.service"
 import { meetingsRouter } from "./routes/meetings.router";
-import { usersRouter } from "./routes/users.router";
+//import { usersRouter } from "./routes/users.router";
 
 const app = express();
 const port = 8080; // default port to listen
@@ -18,7 +18,7 @@ connectToDatabase()
         app.use(cors(options));
 
         app.use("/meeting", meetingsRouter);
-        app.use("/user", usersRouter);
+        //app.use("/user", usersRouter);
 
         app.listen(port, () => {
             console.log(`Server started at http://localhost:${port}`);
