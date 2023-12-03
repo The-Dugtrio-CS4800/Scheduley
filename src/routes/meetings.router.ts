@@ -12,7 +12,7 @@ meetingsRouter.use(express.json());
 // GET
 meetingsRouter.get("/", async (_req: Request, res: Response) => {
     try {
-       const meetings = (await collections.meetings.find({}).toArray()) as Meeting[];
+       const meetings = (await collections.meetings.find({}).toArray());
 
         res.status(200).send(meetings);
     } catch (error) {
@@ -26,7 +26,7 @@ meetingsRouter.get("/:id", async (req: Request, res: Response) => {
     try {
         
         const query = { _id: new ObjectId(id) };
-        const meeting = (await collections.meetings.findOne(query)) as Meeting;
+        const meeting = (await collections.meetings.findOne(query));
 
         if (meeting) {
             res.status(200).send(meeting);
@@ -63,7 +63,7 @@ meetingsRouter.put("/:id", async (req: Request, res: Response) => {
         const result = await collections.meetings.updateOne(query, { $set: updatedMeeting});
 
         result
-            ? res.status(200).send(`Successfully updated meeting with id ${id}`)
+            ? res.status(200).send(result)
             : res.status(304).send(`Meeting with id: ${id} not updated`);
     } catch (error) {
         console.error(error.message);
