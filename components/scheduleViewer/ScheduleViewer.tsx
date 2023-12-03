@@ -321,7 +321,7 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
       this.handleSelectionStartEvent(time)
     }
 
-    const selected = Boolean(this.state.selectionDraft.find(a => isSameMinute(a, time)))
+    const selected = Boolean(this.state.selectionDraft.find(a => isSameMinute(new Date(a), new Date(time))))
 
     return (
       <GridCell
@@ -366,17 +366,17 @@ export default class ScheduleViewer extends React.Component<PropsType, StateType
     if (this.props.renderDateCell) {
       return this.props.renderDateCell(time, selected, refSetter)
     } else {
-      if (allParticipants) {
+      if (this.props.participants && allParticipants) {
         const degree = this.props.participants.filter(
             (participant) => participant.schedule.find(
                 item => {
-                  return item.getTime() == time.getTime()
+                  return new Date(JSON.parse(JSON.stringify(item))).getTime() == time.getTime()
                 })).length;
         return (
             <DateCell
                 selected={degree > 0}
                 ref={refSetter}
-                selectedColor={`hsl(157, 59%, ${100 - degree * 10}%)`}
+                selectedColor={`hsl(157, 59%, ${100 - (degree / this.props.participants.length * 50)}%)`}
                 unselectedColor={this.props.unselectedColor}
                 hoveredColor={this.props.hoveredColor}
             />

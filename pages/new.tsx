@@ -1,19 +1,19 @@
-import {Button, Heading, VStack} from "@chakra-ui/react";
+import {Button, Heading, Input, VStack} from "@chakra-ui/react";
 import React, {useState} from "react";
 import {Calendar, DateObject} from "react-multi-date-picker"
 
 import Navbar from "../components/navbar";
 import {useRouter} from "next/router";
 
-async function generateMeeting(dates) {
+async function generateMeeting(name, dates) {
     try {
-        const response = await fetch("http://ec2-3-144-5-179.us-east-2.compute.amazonaws.com:8080/meeting", {
+        const response = await fetch("http://localhost:8080/meeting/", {
             method: "POST", // or 'PUT'
             headers: {
                  "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: "name",
+                name: name,
                 dates: dates
             }),
         });
@@ -36,6 +36,7 @@ export default function New() {
     const [dates, setDates] = useState([
         [new DateObject(), oneWeek],
     ])
+    const [name, setName] = useState("")
     let id;
 
     return (<>
@@ -44,6 +45,12 @@ export default function New() {
         <VStack spacing='5'>
 
             <Heading py={{ base: '6', md: '12' }}>Create a New Meeting</Heading>
+            <Input
+                value ={name}
+                onChange = {(e) => setName(e.target.value)}
+                placeholder='Enter Meeting Name'
+                size='sm'
+            />
             <Calendar
                 // @ts-ignore
                 value={dates}
@@ -60,7 +67,7 @@ export default function New() {
                                     console.log(date.format())
                                 })
                             })
-                            id = await generateMeeting(dates);
+                            id = await generateMeeting(name, dates);
                             await router.push(`/meeting/${encodeURIComponent(id)}`)
                         }}>
                     Submit
