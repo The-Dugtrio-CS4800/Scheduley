@@ -15,12 +15,13 @@ const validateEmail = (email: string): boolean => {
 };
 
 const validateForm = async (
+  username: string,
   email: string,
   password: string
 ) => {
-//   if (username.length < 3) {
-//     return { error: "Username must have 3 or more characters" };
-//   }
+  if (username.length < 3) {
+    return { error: "Username must have 3 or more characters" };
+  }
   if (!validateEmail(email)) {
     return { error: "Email is invalid" };
   }
@@ -53,7 +54,7 @@ export default async function handler(
   // get and validate body variables
   const { username, email, password } = req.body;
 
-  const errorMessage = await validateForm(email, password);
+  const errorMessage = await validateForm(username, email, password);
   if (errorMessage) {
     return res.status(400).json(errorMessage as ResponseData);
   }
