@@ -166,7 +166,7 @@ export default function Meeting() {
         }
 
         const getEmailStatus = async () => {
-            const url = "http://localhost:8080/meeting/" + meetingID
+            const url = "http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/" + meetingID
             // await fetch at the correct url with a get request
             const response = await fetch(url, {
                 method: "GET",
@@ -177,7 +177,7 @@ export default function Meeting() {
             const result = await response.json();
             if (!result.emailSent && (participants.length >= result.emailNumber)){
                 onSubmit()
-                const putResponse = await fetch("http://localhost:8080/meeting/" + meetingID, {
+                const putResponse = await fetch("http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/" + meetingID, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
