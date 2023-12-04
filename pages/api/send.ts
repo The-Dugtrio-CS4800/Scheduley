@@ -32,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         console.log(request.participantNames)
 
         const data = await resend.emails.send({
-            from: 'Scheduley <onboarding@resend.dev>',
+            from: 'Scheduley <scheduley@scheduley.xyz>',
             to: [request.email],
             subject: request.meetingName,
             //text: request.email
