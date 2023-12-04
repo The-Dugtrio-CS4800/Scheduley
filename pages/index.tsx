@@ -46,7 +46,7 @@ export default function Home(): JSX.Element {
                     </Button>
                 </Link>
             </div>
-            <div style={{ 
+            {/* <div style={{ 
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
@@ -64,7 +64,7 @@ export default function Home(): JSX.Element {
                     New Poll
                 </Button>
                 </Link>
-            </div>
+            </div> */}
             </div>
         </>
     );
