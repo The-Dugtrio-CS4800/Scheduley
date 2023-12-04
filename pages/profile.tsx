@@ -45,7 +45,7 @@ export default function Profile(){
 
     return(<>
         <Navbar/>
-        {/* <Background> */}
+        <Background>
         
 
           {/* if you're adding to the navbar, only add within session ? if you want the component
@@ -89,7 +89,7 @@ export default function Profile(){
             </HStack> */}
               </>
           )}
-        {/* </Background> */}
+        </Background>
         </>)
 
 };

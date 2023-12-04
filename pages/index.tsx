@@ -62,7 +62,7 @@ export default function Home(): JSX.Element {
                         Welcome to Scheduley!
                     </Heading>
                     <Heading color="#3D1800" as='h4' size='md'>
-                        Plan your next meeting with multiple availability view and poll voting features
+                        Plan your next meeting with participant availability view and email notification features
                     </Heading>
                 </Box>
             </Flex>
