@@ -19,13 +19,17 @@ if (process.env.NODE_ENV === "development") {
   }
 
   if (!globalWithMongoClientPromise._mongoClientPromise) {
+    // @ts-ignore
     client = new MongoClient(uri);
+    // @ts-ignore
     globalWithMongoClientPromise._mongoClientPromise = client.connect()
   }
   clientPromise = globalWithMongoClientPromise._mongoClientPromise
 } else {
   // In production mode, it's best to not use a global variable.
+  // @ts-ignore
   client = new MongoClient(uri)
+  // @ts-ignore
   clientPromise = client.connect()
 }
 

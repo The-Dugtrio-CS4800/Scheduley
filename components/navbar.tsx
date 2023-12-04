@@ -80,7 +80,7 @@ export default function WithAction() {
                                 New Meeting
                             </Button>
                         </Link>
-                        <Link as={NextLink} href='/newPoll'>
+                        {/* <Link as={NextLink} href='/newPoll'>
                             <Button color='white'
                                 variant={'solid'}
                                 bg={'#c14953'}
@@ -89,7 +89,7 @@ export default function WithAction() {
                                 leftIcon={<AddIcon />}>
                                 New Poll
                             </Button>
-                        </Link>
+                        </Link> */}
                     </HStack>
                     <Flex alignItems={'center'}>
                         {/* if you're adding to the navbar, only add within session ? if you want the component
