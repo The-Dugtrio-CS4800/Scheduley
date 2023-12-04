@@ -69,9 +69,7 @@ export default function WithAction() {
                                 <Image src="/ScheduleyLogo.png" alt="Logo" boxSize="150px" objectFit="contain" />
                         </NextLink>
                         </Box>
-                        {/* <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-                            <Link as= {NextLink} href='/signIn'> Sign In </Link>
-                        </HStack> */}
+                        
                         <Link as={NextLink} href='/new'>
                             <Button color='white'
                                 variant={'solid'}
@@ -118,16 +116,6 @@ export default function WithAction() {
                                     }
                                 />
                             </MenuButton>
-                            <MenuList>
-                                <MenuItem>
-                                    <Link onClick={() => signOut()} as={NextLink} href='/'>
-                                        Log Out                                    
-                                    </Link>
-                                </MenuItem>
-                                {/* <MenuItem>Link 2</MenuItem>
-                                <MenuDivider />
-                                <MenuItem>Link 3</MenuItem> */}
-                            </MenuList>
                         </Menu>
                         </HStack>
 
@@ -140,32 +128,6 @@ export default function WithAction() {
                             </HStack>
                             </>
                         )}
-                 
-                        <Menu>
-                            {/* <MenuButton
-                                as={Button}
-                                rounded={'full'}
-                                variant={'link'}
-                                cursor={'pointer'}
-                                minW={0}>
-                                <Avatar
-                                    size={'sm'}
-                                    src={
-                                        'https://i.pinimg.com/564x/9f/c8/76/9fc87619ef1efc19009f7ccc420634d1.jpg'
-                                    }
-                                />
-                            </MenuButton> */}
-                            <MenuList>
-                                <MenuItem>
-                                    <Link as={NextLink} href='/'>
-                                        Log Out                                    
-                                    </Link>
-                                </MenuItem>
-                                {/* <MenuItem>Link 2</MenuItem>
-                                <MenuDivider />
-                                <MenuItem>Link 3</MenuItem> */}
-                            </MenuList>
-                        </Menu>
                     </Flex>
                 </Flex>
 

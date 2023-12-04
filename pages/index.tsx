@@ -4,20 +4,40 @@ import Navbar from "../components/navbar";
 import {
     Button,
     Link,
+    Box,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import {AddIcon } from '@chakra-ui/icons'
 
 export default function Home(): JSX.Element {
+    const Background = ({ children }: any) => (
+        <Box
+          display="flex"
+          flex="1 1 auto"
+          justifyContent="center"
+          alignItems="center"
+          backgroundImage="url('homepage-bg.svg')" // coming from public folder
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          backgroundPosition="center"
+          backgroundAttachment="fixed"
+          width="100%"
+          height="100vh"
+          color="white"
+        >
+          {children}
+        </Box>
+      );
     return (
         <>
             <Head>
                 <base href="/" />
                 <title>Scheduley</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" font-size="30" href="/ScheduleyIcon.png"/>
             </Head>
 
             <Navbar/>
+            <Background>
             <div style={{ 
             display: 'flex', 
             flexDirection: 'row', 
@@ -66,6 +86,7 @@ export default function Home(): JSX.Element {
                 </Link>
             </div> */}
             </div>
+            </Background>
         </>
     );
 }

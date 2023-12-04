@@ -12,7 +12,7 @@ pollsRouter.use(express.json());
 // GET
 pollsRouter.get("/", async (_req: Request, res: Response) => {
     try {
-       const polls = (await collections.polls.find({}).toArray()) as Poll[];
+       const polls = (await collections.polls.find({}).toArray());
 
         res.status(200).send(polls);
     } catch (error) {
@@ -26,7 +26,7 @@ pollsRouter.get("/:id", async (req: Request, res: Response) => {
     try {
         
         const query = { _id: new ObjectId(id) };
-        const poll = (await collections.polls.findOne(query)) as Poll;
+        const poll = (await collections.polls.findOne(query));
 
         if (poll) {
             res.status(200).send(poll);
