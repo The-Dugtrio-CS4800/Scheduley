@@ -12,7 +12,7 @@ usersRouter.use(express.json());
 // GET
 usersRouter.get("/", async (_req: Request, res: Response) => {
     try {
-       const users = (await collections.users.find({}).toArray()) as User[];
+       const users = (await collections.users.find({}).toArray()) ;
 
         res.status(200).send(users);
     } catch (error) {
@@ -26,7 +26,7 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
     try {
         
         const query = { _id: new ObjectId(id) };
-        const user = (await collections.users.findOne(query)) as User;
+        const user = (await collections.users.findOne(query)) ;
 
         if (user) {
             res.status(200).send(user);
@@ -40,7 +40,7 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
         console.log(req.body)
-        const newUser = req.body as User;
+        const newUser = req.body ;
         const result = await collections.users.insertOne(newUser);
 
         result
@@ -57,7 +57,7 @@ usersRouter.put("/:id", async (req: Request, res: Response) => {
     const id = req?.params?.id;
 
     try {
-        const updatedUser: User = req.body as User;
+        const updatedUser  = req.body ;
         const query = { _id: new ObjectId(id) };
       
         const result = await collections.users.updateOne(query, { $set: updatedUser});
