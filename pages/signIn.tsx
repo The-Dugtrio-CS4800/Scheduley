@@ -26,6 +26,7 @@ import {
       email: string,
       password: string
     }
+
     export default function SignIn() {
     const Background = ({ children }: any) => (
       <Box
@@ -136,7 +137,7 @@ import {
           >
           {({handleSubmit, values, handleChange}) => (
           <form onSubmit={handleSubmit}>
-          {/* <Form> */}
+
           <Container maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
           <Stack spacing="8">
             <Stack spacing="6">

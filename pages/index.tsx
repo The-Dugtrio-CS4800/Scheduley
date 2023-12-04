@@ -14,7 +14,7 @@ export default function Home(): JSX.Element {
             <Head>
                 <base href="/" />
                 <title>Scheduley</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" font-size="30" href="/ScheduleyIcon.png"/>
             </Head>
 
             <Navbar/>
