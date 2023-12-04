@@ -9,7 +9,7 @@ import { Text } from '@chakra-ui/react'
 
 const updateSchedule = async(id, participant, dates) => {
 
-    const getResponse = await fetch("http://localhost:8080/meeting/" + id, {
+    const getResponse = await fetch("http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/" + id, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const updateSchedule = async(id, participant, dates) => {
         }]
     }
 
-    const putResponse = await fetch("http://localhost:8080/meeting/" + id, {
+    const putResponse = await fetch("http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/" + id, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const updateSchedule = async(id, participant, dates) => {
     });
     const putResult = await putResponse.json();
     console.log("Success:", putResult);
-    const getResponseAfterPut = await fetch("http://localhost:8080/meeting/" + id, {
+    const getResponseAfterPut = await fetch("http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/" + id, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export default function Meeting() {
         const getDates = async (id) => {
             try {
                 // add the meeting id to the url to fetch the object with that id
-                const url = "http://localhost:8080/meeting/" + id
+                const url = "http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/" + id
                 // await fetch at the correct url with a get request
                 const response = await fetch(url, {
                     method: "GET",
