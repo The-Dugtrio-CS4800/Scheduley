@@ -5,7 +5,7 @@ import {Calendar, DateObject} from "react-multi-date-picker"
 import Navbar from "../components/navbar";
 import {useRouter} from "next/router";
 
-async function generateMeeting(name, dates) {
+async function generateMeeting(name, dates, email) {
     try {
         const response = await fetch("http://localhost:8080/meeting/", {
             method: "POST", // or 'PUT'
@@ -13,13 +13,14 @@ async function generateMeeting(name, dates) {
                  "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                name: name,
-                dates: dates
+                title: name,
+                dates: dates,
+                email: email
             }),
         });
 
         const result = await response.json();
-        console.log("Success:", result);
+        //console.log("Success:", result);
         return result.id;
     } catch (error) {
         // return random value for now, this should prevent you from proceeding later
@@ -37,6 +38,7 @@ export default function New() {
         [new DateObject(), oneWeek],
     ])
     const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
     let id;
 
     return (<>
@@ -49,6 +51,12 @@ export default function New() {
                 value ={name}
                 onChange = {(e) => setName(e.target.value)}
                 placeholder='Enter Meeting Name'
+                size='sm'
+            />
+            <Input
+                value ={email}
+                onChange = {(e) => setEmail(e.target.value)}
+                placeholder='Enter Your Email for Notifications (optional)'
                 size='sm'
             />
             <Calendar
@@ -64,10 +72,10 @@ export default function New() {
                         onClick={async () => {
                             dates.map((dateList) => {
                                 dateList.map((date) => {
-                                    console.log(date.format())
+                                    //console.log(date.format())
                                 })
                             })
-                            id = await generateMeeting(name, dates);
+                            id = await generateMeeting(name, dates, email);
                             await router.push(`/meeting/${encodeURIComponent(id)}`)
                         }}>
                     Submit

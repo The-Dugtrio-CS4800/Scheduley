@@ -17,7 +17,7 @@ const updateSchedule = async(id, participant, dates) => {
     });
     // store the result
     const result = await getResponse.json();
-    console.log("Success:", result);
+    //console.log("Success:", result);
     if (result.participants) {
         result.participants.push({
             name: participant,
@@ -40,7 +40,7 @@ const updateSchedule = async(id, participant, dates) => {
         }),
     });
     const putResult = await putResponse.json();
-    console.log("Success:", putResult);
+    //console.log("Success:", putResult);
     const getResponseAfterPut = await fetch("http://localhost:8080/meeting/" + id, {
         method: "GET",
         headers: {
@@ -49,15 +49,15 @@ const updateSchedule = async(id, participant, dates) => {
     });
     // store the result
     const getPutResult = await getResponseAfterPut.json();
-    console.log("Success:", getPutResult);
+    //console.log("Success:", getPutResult);
     getPutResult.participants.map((participant) => {
-        console.log("mapping participant name:" + participant)
+        //console.log("mapping participant name:" + participant)
         for (let index = 0; index < participant.schedule.length; index++) {
-            console.log("mapping date:" + participant.schedule[index])
+            //console.log("mapping date:" + participant.schedule[index])
             participant.schedule[index] = new Date(JSON.parse(JSON.stringify(participant.schedule[index])))
         }
     })
-    console.log(getPutResult.participants)
+    //console.log(getPutResult.participants)
     return getPutResult.participants
 }
 
@@ -69,6 +69,7 @@ export default function Meeting() {
     const [startDate, setStartDate] = useState<Date>()
     const [numDays, setNumDays] = useState(5)
     const [activeParticipant, setActiveParticipant] = useState(null)
+    const [email, setEmail] = useState(null)
     const [name, setName] = useState("")
     const [meetingName, setMeetingName] = useState("")
     const [allParticipants, setAllParticipants] = useState(true)
@@ -89,7 +90,7 @@ export default function Meeting() {
                 });
                 // store the result
                 const result = await response.json();
-                console.log("Success:", result);
+                //console.log("Success:", result);
                 // get the start date of the meeting from the result
                 const newStartDate = new Date(parseInt(result.dates[0][0]))
                 const endDate = new Date(parseInt(result.dates[0][1]))
@@ -97,12 +98,15 @@ export default function Meeting() {
                 const days_difference = Math.ceil(time_difference / (1000 * 60 * 60 * 24))
                 setStartDate(newStartDate)
                 setNumDays(days_difference+1)
-                setMeetingName(result.name)
+                setMeetingName(result.title)
+                if (result.email) {
+                    setEmail(result.email)
+                }
                 if (!result.hasOwnProperty('participants')){
                     result.participants.map((participant) => {
-                        console.log("mapping participant name:" + participant)
+                        //console.log("mapping participant name:" + participant)
                         for (let index = 0; index < participant.schedule.length; index++) {
-                            console.log("mapping date:" + participant.schedule[index])
+                            //console.log("mapping date:" + participant.schedule[index])
                             participant.schedule[index] = new Date(JSON.parse(JSON.stringify(participant.schedule[index])))
                         }
                     })
@@ -142,25 +146,55 @@ export default function Meeting() {
         setHoveredDate(date)
     }
     useEffect(() => {
-        console.log("participants" + participants)
+        const onSubmit = async () => {
+            let participantNames: string[] = []
+            for (let index = 0; index < participants.length; index++) {
+                participantNames.push(participants[index].name)
+            }
+
+            const response = await fetch("/api/send", {
+                method: "POST",
+                body: JSON.stringify({
+                    participantNames: participantNames,
+                    email: email
+
+                }),
+            });
+            const result = await response.json();
+            console.log("response from await:" + JSON.stringify(result))
+        }
+
+        const getEmailStatus = async () => {
+            const url = "http://localhost:8080/meeting/" + meetingID
+            // await fetch at the correct url with a get request
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const result = await response.json();
+            if (!result.emailSent){
+                onSubmit()
+                const putResponse = await fetch("http://localhost:8080/meeting/" + meetingID, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        emailSent: true
+                    }),
+                });
+            }
+        }
+
+
+        if(email && participants.length > 5){
+            getEmailStatus()
+        }
     }, [participants])
 
-
-
     const test: string = "test"
-
-    async function onSubmit() {
-        await fetch("/api/send", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                schedule
-            }),
-        });
-        //console.log(JSON.stringify(schedule))
-    }
 
     return <>{
 
@@ -263,8 +297,11 @@ export default function Meeting() {
                         padding={5}
                         margin={5}
                         onClick={async ()=>{
-                            setParticipants(await updateSchedule(meetingID, name, schedule))
-                            setSchedule([])}}
+                            await setParticipants(await updateSchedule(meetingID, name, schedule))
+                            setSchedule([])
+
+                        }}
+
                     >
                         Add availability
                     </Button>
