@@ -71,7 +71,7 @@ import {
                   type="submit"
                   onClick={() => {
                     signIn(provider.id, {
-                      callbackUrl: `${window.location.origin}`,
+                      callbackUrl: 'http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:3000/',
                     });
                   }}
                 >
