@@ -3,13 +3,19 @@ import * as React from 'react'
 import Navbar from "../components/navbar";
 import {
     Button,
+    Container,
+    Divider,
     Link,
+    Flex,
     Box,
+    Stack,
+    Heading,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import {AddIcon } from '@chakra-ui/icons'
 
 export default function Home(): JSX.Element {
+    
     const Background = ({ children }: any) => (
         <Box
           display="flex"
@@ -47,7 +53,20 @@ export default function Home(): JSX.Element {
             boxSizing: 'border-box',
             paddingTop: 'heightOfNavbar' // Replace heightOufNavbar with the actual height of your navbar
             }}>
-            <div style={{ 
+            <Flex
+            align="center"
+            justify="center"
+            >
+                <Box textAlign="center">
+                    <Heading color="#BF4A54" as='h1' size='3xl' mb={8}>
+                        Welcome to Scheduley!
+                    </Heading>
+                    <Heading color="#3D1800" as='h4' size='md'>
+                        Plan your next meeting with multiple availability view and poll voting features
+                    </Heading>
+                </Box>
+            </Flex>
+            {/* <div style={{ 
                 display: 'flex', 
                 flexDirection: 'column', 
                 alignItems: 'center', 
@@ -65,7 +84,7 @@ export default function Home(): JSX.Element {
                         New Meeting
                     </Button>
                 </Link>
-            </div>
+            </div> */}
             {/* <div style={{ 
                 display: 'flex', 
                 flexDirection: 'column', 
