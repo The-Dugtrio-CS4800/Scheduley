@@ -99,7 +99,7 @@ export default function Meeting() {
                 setStartDate(newStartDate)
                 setNumDays(days_difference+1)
                 setMeetingName(result.title)
-                if (result.email) {
+                if (result.email.trim() != "") {
                     setEmail(result.email)
                 }
                 if (!result.hasOwnProperty('participants')){
@@ -151,12 +151,13 @@ export default function Meeting() {
             for (let index = 0; index < participants.length; index++) {
                 participantNames.push(participants[index].name)
             }
-
             const response = await fetch("/api/send", {
                 method: "POST",
                 body: JSON.stringify({
                     participantNames: participantNames,
-                    email: email
+                    email: email,
+                    meetingName: meetingName,
+                    url: window.location.href
 
                 }),
             });
@@ -174,7 +175,7 @@ export default function Meeting() {
                 },
             });
             const result = await response.json();
-            if (!result.emailSent){
+            if (!result.emailSent && (participants.length >= result.emailNumber)){
                 onSubmit()
                 const putResponse = await fetch("http://localhost:8080/meeting/" + meetingID, {
                     method: "PUT",
@@ -189,7 +190,7 @@ export default function Meeting() {
         }
 
 
-        if(email && participants.length > 5){
+        if(email){
             getEmailStatus()
         }
     }, [participants])

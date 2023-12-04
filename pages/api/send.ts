@@ -7,7 +7,7 @@ import * as React from "react";
 dotenv.config();
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const emailTemplate = (participantNames) => {
+const emailTemplate = (participantNames, meetingName, url) => {
     let nameString = ""
     for (let i = 0; i < participantNames.length; i++){
         nameString += `<li>` + participantNames[i] + `</li>`
@@ -15,8 +15,10 @@ const emailTemplate = (participantNames) => {
 
     return(
         `<div>
-            <h1>The following people have filled out their meeting times:</h1>
+            <h3>For your meeting ${meetingName}</h3>
+            <h4>The following people have filled out their meeting times:</h4>
             ${nameString}
+            <p>See your meeting <a href="${url}">here</a></p>
     </div>`
 )}
 
@@ -32,9 +34,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const data = await resend.emails.send({
             from: 'Scheduley <onboarding@resend.dev>',
             to: [request.email],
-            subject: 'Hello world',
+            subject: request.meetingName,
             //text: request.email
-            html: emailTemplate(request.participantNames)
+            html: emailTemplate(request.participantNames, request.meetingName, request.url)
             //react: EmailTemplate(request.participantNames),
         });
 
