@@ -1,5 +1,7 @@
 import {
     Button,
+    Box,
+    Container,
     Heading,
     Input,
     NumberDecrementStepper, NumberIncrementStepper,
@@ -42,6 +44,25 @@ async function generateMeeting(name, dates, email, emailNumber) {
 }
 
 export default function New() {
+    const Background = ({ children }: any) => (
+        <Box
+          display="flex"
+          flex="1 1 auto"
+          justifyContent="center"
+          alignItems="center"
+          backgroundImage="url('homepage-bg.svg')" // coming from public folder
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          backgroundPosition="center"
+          backgroundAttachment="fixed"
+          width="100%"
+          height="100vh"
+        //   color="white"
+        >
+          {children}
+        </Box>
+      );
+
     const router = useRouter()
     const oneWeek = new DateObject()
     oneWeek.day += 6
@@ -56,23 +77,29 @@ export default function New() {
     return (<>
 
         <Navbar/>
-        <VStack spacing='5'>
-
-            <Heading py={{ base: '6', md: '12' }}>Create a New Meeting</Heading>
+        {/* <Background> */}
+        <VStack>
+            <Heading color="#BF4A54" py={{ base: '3', md: '5' }}>Create a New Meeting</Heading>
+            {/* <Box color="white"> */}
+            <Container>
             <Input
                 value ={name}
+                color="black"
                 onChange = {(e) => setName(e.target.value)}
                 placeholder='Enter Meeting Name'
                 size='sm'
             />
             <Input
                 value ={email}
+                color="black"
                 onChange = {(e) => setEmail(e.target.value)}
                 placeholder='Enter Your Email for Notifications (optional)'
                 size='sm'
             />
-            <Text>Send an email when this many people have added their availability:</Text>
-            <NumberInput defaultValue={5} min={1} max={20}
+            {/* </Box> */}
+            </Container>
+            <Text color="black">Send an email when this many people have added their availability:</Text>
+            <NumberInput color="black" defaultValue={5} min={1} max={20}
                          onChange={(num) => setEmailNumber(parseInt(num))}>
                 <NumberInputField />
                 <NumberInputStepper>
@@ -103,5 +130,6 @@ export default function New() {
                 </Button>
 
         </VStack>
+        {/* </Background> */}
     </>)
 }

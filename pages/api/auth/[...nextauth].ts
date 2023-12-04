@@ -48,7 +48,7 @@ export default NextAuth({
           throw new Error("Email is not registered");
         }
 
-        // Check hased password with DB hashed password
+        // Check hashed password with DB hashed password
         const isPasswordCorrect = await compare(
           credentials!.password,
           user.hashedPassword
@@ -74,8 +74,8 @@ export default NextAuth({
   debug: process.env.NODE_ENV === "development",
   adapter: MongoDBAdapter(clientPromise),
   session: { strategy: "jwt"},
-  // jwt: {
-  //   secret: process.env.NEXTAUTH_JWT_SECRET,
-  // },
+  jwt: {
+    secret: process.env.NEXTAUTH_JWT_SECRET,
+  },
   secret: process.env.NEXTAUTH_SECRET,
 });
