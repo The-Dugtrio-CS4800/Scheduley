@@ -19,9 +19,9 @@ const validateForm = async (
   email: string,
   password: string
 ) => {
-//   if (username.length < 3) {
-//     return { error: "Username must have 3 or more characters" };
-//   }
+  if (username.length < 3) {
+    return { error: "Username must have 3 or more characters" };
+  }
   if (!validateEmail(email)) {
     return { error: "Email is invalid" };
   }
@@ -72,7 +72,7 @@ export default async function handler(
   newUser
     .save()
     .then(() =>
-      res.status(200).json({ msg: "Successfuly created new User: " + newUser })
+      res.status(200).json({ msg: "Successfully created new User: " + newUser })
     )
     .catch((err: string) =>
       res.status(400).json({ error: "Error on '/api/register': " + err })

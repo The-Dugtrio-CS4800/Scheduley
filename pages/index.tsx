@@ -54,7 +54,7 @@ export default function Home(): JSX.Element {
                 margin: '0 10px' // Adds spacing between the combos
             }}>
                 <img src="meeting.png" alt="New poll sample" style={{ display: 'block', width: '250px', height: 'auto', marginBottom: '10px' }} />
-                <Link as={NextLink} href='/poll'>
+                <Link as={NextLink} href='/newPoll'>
                 <Button color='white'
                     variant={'solid'}
                     bg={'#c14953'}

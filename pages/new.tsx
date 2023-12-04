@@ -17,7 +17,7 @@ import {useRouter} from "next/router";
 
 async function generateMeeting(name, dates, email, emailNumber) {
     try {
-        const response = await fetch("http://localhost:8080/meeting/", {
+        const response = await fetch("http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:8080/meeting/", {
             method: "POST",
             headers: {
                  "Content-Type": "application/json",

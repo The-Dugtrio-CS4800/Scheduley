@@ -9,7 +9,7 @@ const port = 8080; // default port to listen
 
 connectToDatabase()
     .then(() => {
-        const allowedOrigins = ['http://localhost:3000'];
+        const allowedOrigins = ['http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:3000'];
 
         const options: cors.CorsOptions = {
             origin: allowedOrigins
@@ -21,7 +21,7 @@ connectToDatabase()
         //app.use("/user", usersRouter);
 
         app.listen(port, () => {
-            console.log(`Server started at http://localhost:${port}`);
+            console.log(`Server started at http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:${port}`);
         });
     })
     .catch((error: Error) => {
