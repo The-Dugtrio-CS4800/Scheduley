@@ -103,6 +103,7 @@ export default function WithAction() {
                             <Button onClick={() => signOut()}>Sign out</Button>
 
                             <Menu>
+                            <Link as={NextLink} href='/profile'>
                             <MenuButton
                                 as={Button}
                                 rounded={'full'}
@@ -116,6 +117,7 @@ export default function WithAction() {
                                     }
                                 />
                             </MenuButton>
+                            </Link>
                         </Menu>
                         </HStack>
 
