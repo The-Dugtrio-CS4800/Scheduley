@@ -5,17 +5,17 @@ import { meetingsRouter } from "./routes/meetings.router";
 //import { usersRouter } from "./routes/users.router";
 
 const app = express();
-const port = 8080; // default port to listen
+const port = process.env.PORT || '8080'; // default port to listen
 
 connectToDatabase()
     .then(() => {
-        const allowedOrigins = ['http://ec2-18-189-28-104.us-east-2.compute.amazonaws.com:3000'];
+        const allowedOrigins = ['*'];
 
         const options: cors.CorsOptions = {
             origin: allowedOrigins
         };
 
-        app.use(cors(options));
+        app.use(cors());
 
         app.use("/meeting", meetingsRouter);
         //app.use("/user", usersRouter);
