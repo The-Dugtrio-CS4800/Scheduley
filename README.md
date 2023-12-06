@@ -9,6 +9,6 @@ Check out the demo video at the link below!
 
 ![image](https://github.com/The-Dugtrio-CS4800/Scheduley/assets/90418786/dcf357d4-2425-4745-b418-944d00de2191)
 
-![image](https://github.com/The-Dugtrio-CS4800/Scheduley/assets/90418786/5c409118-1612-4221-92df-d92cada133e0)
+<img width="1087" alt="Screen Shot 2023-12-05 at 9 25 29 PM" src="https://github.com/The-Dugtrio-CS4800/Scheduley/assets/90418786/c22165e6-60cb-4048-9157-9cc52a806c32">
 
 ![image](https://github.com/The-Dugtrio-CS4800/Scheduley/assets/90418786/3a2e5ec9-47a0-4d1b-afbb-9f80d6108e04)
